@@ -12,10 +12,11 @@ import android.os.Bundle;
 import com.marzhillstudios.quizme.data.CardDatabase;
 
 /**
- * @author Jeremy Wall <jeremy@marzhillstudios.com>
  * 
  * Activity for managing cards. This Activity will be responsible for
  * handling Card Creation/Editing/Deletion and Import/Export.
+ * 
+ * @author Jeremy Wall <jeremy@marzhillstudios.com>
  */
 public class CardManagerActivity extends Activity {
 

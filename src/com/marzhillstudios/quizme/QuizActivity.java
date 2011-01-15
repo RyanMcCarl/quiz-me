@@ -12,9 +12,9 @@ import android.app.Activity;
 import android.os.Bundle;
 
 /**
- *  @author Jeremy Wall <jeremy@marzhillstudios.com>
- *
  * Quizzes the user with the currently scheduled cards.
+ *
+ *  @author Jeremy Wall <jeremy@marzhillstudios.com>
  *  
  */
 public class QuizActivity extends Activity {

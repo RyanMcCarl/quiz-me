@@ -11,9 +11,9 @@ import android.os.Bundle;
 
 /**
  * 
- * @author Jeremy Wall <jeremy@marzhillstudios.com>
- * 
  * Start Activity for the TeachMe application.
+ * 
+ * @author Jeremy Wall <jeremy@marzhillstudios.com>
  *
  */
 public class MainActivity extends Activity {
