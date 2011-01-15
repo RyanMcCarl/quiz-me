@@ -19,6 +19,7 @@ import android.os.Bundle;
  */
 public class QuizActivity extends Activity {
 
+	@SuppressWarnings("unused")
 	private CardDatabase db;
 	
 	@Override
