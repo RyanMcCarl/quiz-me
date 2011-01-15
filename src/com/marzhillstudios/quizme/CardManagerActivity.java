@@ -6,8 +6,6 @@
 
 package com.marzhillstudios.quizme;
 
-import com.marzhillstudios.quizme.R;
-
 import android.app.Activity;
 import android.os.Bundle;
 
