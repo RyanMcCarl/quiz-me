@@ -4,9 +4,7 @@
  * http://www.apache.org/licenses/LICENSE-2.0.html
  */
 
-package com.marzhillstudios.teachme;
-
-import com.marzhillstudios.teachme.R;
+package com.marzhillstudios.quizme;
 
 import android.app.Activity;
 import android.os.Bundle;
