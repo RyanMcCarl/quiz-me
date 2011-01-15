@@ -6,6 +6,8 @@
 
 package com.marzhillstudios.quizme;
 
+import com.marzhillstudios.quizme.data.CardDatabase;
+
 import android.app.Activity;
 import android.os.Bundle;
 
@@ -17,9 +19,12 @@ import android.os.Bundle;
  */
 public class QuizActivity extends Activity {
 
+	private CardDatabase db;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		db = new CardDatabase(this);
 		setContentView(R.layout.quiz);
 	}
 
