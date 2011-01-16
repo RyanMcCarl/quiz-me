@@ -22,8 +22,10 @@ public class CardDatabase extends SQLiteOpenHelper {
 	private static final String STATS_TABLE_NAME = "card_stats_table";
 	private static final String TAGS_TABLE_NAME = "card_tags_table";
 	
-	private static final String CARDS_TABLE_COLUMNS = "'id' INT, 'title' TEXT, 'file' TEXT, 'deck' TEXT";
-	private static final String STATS_TABLE_COLUMNS = "'card_id' INT, 'stat' TEXT, 'value' INT";
+	private static final String CARDS_TABLE_COLUMNS =
+            "'id' INT, 'title' TEXT, 'file' TEXT, 'deck' TEXT";
+	private static final String STATS_TABLE_COLUMNS =
+            "'card_id' INT, 'stat' TEXT, 'value' INT";
 	private static final String TAGS_TABLE_COLUMNS = "'card_id', 'tag' TEXT";
 
 	public CardDatabase(Context context) {
@@ -52,7 +54,6 @@ public class CardDatabase extends SQLiteOpenHelper {
 	 */
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		// TODO Auto-generated method stub
 
 	}
 
