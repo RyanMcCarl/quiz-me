@@ -4,8 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-<Button android:id="@+id/Button01" android:text="@string/ManageCardsButton" android:layout_height="wrap_content" android:layout_width="match_parent"></Button>
-<Button android:layout_width="match_parent" android:id="@+id/Button02" android:text="@string/LaunchQuizButton" android:layout_height="wrap_content"></Button>
+<Button android:id="@+id/launchManagerBtn" android:text="@string/LaunchManagerButton" android:layout_height="wrap_content" android:layout_width="match_parent"></Button>
+<Button android:layout_width="match_parent" android:id="@+id/LaunchQuizBtn" android:text="@string/LaunchQuizButton" android:layout_height="wrap_content"></Button>
 
 
 </LinearLayout>

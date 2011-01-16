@@ -3,7 +3,7 @@
     <string name="hello">Hello World, TeachMe!</string>
     <string name="app_name">Teach Me</string>
 <string name="LaunchQuizButton">TeachMe</string>
-<string name="ManageCardsButton">Manage Cards</string>
+<string name="LaunchManagerButton">Manage Cards</string>
 <string name="QuizzerDescription">Shows the Quiz Cards that are currently scheduled for review.</string>
 <string name="QuizzerName">Quizzer</string>
 <string name="CardManagerName">Card Manager</string>
