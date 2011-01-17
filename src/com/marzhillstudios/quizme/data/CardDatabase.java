@@ -59,8 +59,8 @@ public class CardDatabase extends SQLiteOpenHelper {
 
 	}
 
-    public Card upsertCard(Card card) {
-        return null;
+    public Maybe<Card> upsertCard(Card card) {
+        return new Maybe<Card>();
     }
 
     public void deleteCard(Card card) {
