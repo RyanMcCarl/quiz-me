@@ -22,8 +22,12 @@ public class Maybe<T> {
     }
 
     public Maybe(T obj) {
-       nothing = false;
-       item = obj; 
+       if (obj != null) {
+           nothing = false;
+           item = obj;
+       } else {
+           nothing = true;
+       }
     }
 
     public boolean nothing() {

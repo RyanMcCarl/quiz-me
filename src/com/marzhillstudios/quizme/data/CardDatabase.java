@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.marzhillstudios.util.Maybe;
+import com.marzhillstudios.util.MaybeDo;
 
 /**
  * @author jwall
@@ -58,17 +59,41 @@ public class CardDatabase extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         
     }
-    
-    public Maybe<Card> upsertCard(Card card) {
+
+    /**
+     * Get a card from the database.
+     *
+     * @param id The primary key for the card in the database.
+     * @returns Maybe card. @see com.marzhillstudios.util.Maybe
+     */
+    public Maybe<Card> getCard(int id) {
         return new Maybe<Card>();
-    public Card upsertCard(Card card) {
-        return null;
     }
     
+    /**
+     * Update/Insert a card in the database.
+     *
+     * Maybe updates or Inserts a card in the database. For details about
+     * The Maybe generic class @see @see com.marzhillstudios.util.Maybe
+     * and @see com.marzhillstudios.util.MaybeDo.
+     * 
+     * @param card a Maybe<Card> .
+     * @returns a Maybe<Card>.
+     */
+    public Maybe<Card> upsertCard(Maybe<Card> card) {
+        return new Maybe<Card>();
+    }
+    
+    /** Delete a card in the database. */
     public void deleteCard(Card card) {
         deleteCard(card.getId());
     }
     
+    /**
+     * Delete a card in the database.
+     *
+     * @param id The integer primary key for the key in the database.
+     */
     public void deleteCard(int id) {
     }
 }
