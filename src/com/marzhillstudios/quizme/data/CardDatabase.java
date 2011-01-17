@@ -10,6 +10,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.marzhillstudios.util.Maybe;
+
 /**
  * @author jwall
  *
@@ -23,7 +25,7 @@ public class CardDatabase extends SQLiteOpenHelper {
 	private static final String TAGS_TABLE_NAME = "card_tags_table";
 	
 	private static final String CARDS_TABLE_COLUMNS =
-            "'id' INT, 'title' TEXT, 'file' TEXT, 'deck' TEXT";
+            "'id' INT, 'title' TEXT, 'file' TEXT, 'deck' INT";
 	private static final String STATS_TABLE_COLUMNS =
             "'card_id' INT, 'stat' TEXT, 'value' INT";
 	private static final String TAGS_TABLE_COLUMNS = "'card_id', 'tag' TEXT";
@@ -57,4 +59,14 @@ public class CardDatabase extends SQLiteOpenHelper {
 
 	}
 
+    public Card upsertCard(Card card) {
+        return null;
+    }
+
+    public void deleteCard(Card card) {
+        deleteCard(card.getId());
+    }
+
+    public void deleteCard(int id) {
+    }
 }
