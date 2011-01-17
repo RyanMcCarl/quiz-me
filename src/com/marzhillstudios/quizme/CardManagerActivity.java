@@ -19,16 +19,15 @@ import com.marzhillstudios.quizme.data.CardDatabase;
  * @author Jeremy Wall <jeremy@marzhillstudios.com>
  */
 public class CardManagerActivity extends Activity {
-
-	@SuppressWarnings("unused")
-	private CardDatabase db;
-	
-	/** Called when the activity is first created. */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-	    super.onCreate(savedInstanceState);
-	    db = new CardDatabase(this);
-	    setContentView(R.layout.cardmanager);
-	}
-
+    
+    @SuppressWarnings("unused")
+    private CardDatabase db;
+    
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        db = new CardDatabase(this);
+        setContentView(R.layout.cardmanager);
+    }
 }

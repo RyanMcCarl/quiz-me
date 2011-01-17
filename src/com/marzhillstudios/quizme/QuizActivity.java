@@ -18,15 +18,15 @@ import android.os.Bundle;
  *  
  */
 public class QuizActivity extends Activity {
-
-	@SuppressWarnings("unused")
-	private CardDatabase db;
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		db = new CardDatabase(this);
-		setContentView(R.layout.quiz);
-	}
-
+    
+    @SuppressWarnings("unused")
+    private CardDatabase db;
+    
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        db = new CardDatabase(this);
+        setContentView(R.layout.quiz);
+    }
+    
 }

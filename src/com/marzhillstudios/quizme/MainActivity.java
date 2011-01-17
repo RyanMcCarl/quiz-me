@@ -23,8 +23,8 @@ import android.widget.Button;
  */
 public class MainActivity extends Activity {
     /** Called when the activity is first created. */
-	
-	@Override
+    
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
@@ -33,20 +33,20 @@ public class MainActivity extends Activity {
         Button managerLaunchBtn = (Button)findViewById(R.id.launchManagerBtn);
         
         OnClickListener quizBtnListener = new OnClickListener() {
-			
-			public void onClick(View v) {
-				startActivity(new Intent(mainCtx, QuizActivity.class));
-			}
-		};
-		
-		OnClickListener manageBtnListener = new OnClickListener() {
-			
-			public void onClick(View v) {
-				startActivity(new Intent(mainCtx, CardManagerActivity.class));
-			}
-		};
-		
-		quizLaunchBtn.setOnClickListener(quizBtnListener);
-		managerLaunchBtn.setOnClickListener(manageBtnListener);
+                
+                public void onClick(View v) {
+                    startActivity(new Intent(mainCtx, QuizActivity.class));
+                }
+            };
+        
+        OnClickListener manageBtnListener = new OnClickListener() {
+                
+                public void onClick(View v) {
+                    startActivity(new Intent(mainCtx, CardManagerActivity.class));
+                }
+            };
+        
+        quizLaunchBtn.setOnClickListener(quizBtnListener);
+        managerLaunchBtn.setOnClickListener(manageBtnListener);
     }
 }
