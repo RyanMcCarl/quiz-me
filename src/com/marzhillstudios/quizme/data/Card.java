@@ -7,6 +7,7 @@
 package com.marzhillstudios.quizme.data;
 
 import java.net.URL;
+import java.util.Date;
 
 /**
  * Describe a flash card.
@@ -23,26 +24,53 @@ public class Card {
     // urls pointing to the files the card has
     public URL side1;
     public URL side2;
-    // the deck this card is in 0-n
-    public int deck;
+    // the current e-factor for this card
+    public float eFactor = 2.5f;
+    public int count = 0;
+    public Date lastTime;
+    public int interval;
     
     public Card(
-        int id, String title, URL side1, URL side2, int deck) {
+        int id, String title, URL side1, URL side2, float eFactor) {
       this.id = id;
       this.title = title;
       this.side1 = side1;
       this.side2 = side2;
-      this.deck = deck;
+      this.eFactor = eFactor;
     }
 
     public Card(String title, URL side1, URL side2) {
       this.title = title;
       this.side1 = side1;
       this.side2 = side2;
-      this.deck = 0;
+      this.eFactor = 0;
     }
 
     public int getId() {
-        return this.id;
+        return id;
+    }
+
+    public float getEFactor() {
+        return eFactor;
+    }
+
+    public void setEFactor(float factor) {
+        eFactor = factor;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public float getInterval() {
+        return interval;
+    }
+
+    public void setInterval(int interval) {
+        this.interval = interval;
     }
 }

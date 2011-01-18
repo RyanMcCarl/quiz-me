@@ -26,7 +26,7 @@ public class CardDatabase extends SQLiteOpenHelper {
     private static final String TAGS_TABLE_NAME = "card_tags_table";
     
     private static final String CARDS_TABLE_COLUMNS =
-        "'id' INT, 'title' TEXT, 'file' TEXT, 'deck' INT";
+        "'id' INT, 'title' TEXT, 'file' TEXT, 'ef' REAL, count INT, interval INT, last INTEGER";
     private static final String STATS_TABLE_COLUMNS =
         "'card_id' INT, 'stat' TEXT, 'value' INT";
     private static final String TAGS_TABLE_COLUMNS = "'card_id', 'tag' TEXT";
