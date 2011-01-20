@@ -50,7 +50,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
         
     }
 
-    protected void testPreconditions() throws Exception {
+    public void testPreconditions() throws Exception {
         assertNotNull(mainLayout);
         assertNotNull(launchQuizBtn);
         assertNotNull(launchCardManagerBtn);

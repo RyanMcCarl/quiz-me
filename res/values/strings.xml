@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, TeachMe!</string>
-    <string name="app_name">Teach Me</string>
-<string name="LaunchQuizButton">TeachMe</string>
-<string name="LaunchManagerButton">Manage Cards</string>
-<string name="QuizzerDescription">Shows the Quiz Cards that are currently scheduled for review.</string>
-<string name="QuizzerName">Quizzer</string>
-<string name="CardManagerName">Card Manager</string>
-<string name="CardManagerDescription">Manage the card decks. Create new cards, import/export, delete cards</string>
+  <string name="app_name">Quiz Me</string>
+  <string name="LaunchQuizButton">TeachMe</string>
+  <string name="LaunchManagerButton">Manage Cards</string>
+  <string name="QuizzerDescription">Shows the Quiz Cards that are currently scheduled for review.</string>
+  <string name="QuizzerName">Quizzer</string>
+  <string name="CardManagerName">Card Manager</string>
+  <string name="CardManagerDescription">Manage the card decks. Create new cards, import/export, delete cards</string>
 </resources>
