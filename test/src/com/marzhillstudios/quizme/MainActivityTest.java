@@ -70,4 +70,26 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
         // TODO(jwall): check that QuizActivity has started.
         ViewAsserts.assertOnScreen(launchQuizBtn, quizLayout); 
     }
+
+    public void testLaunchManagerBtnLaunchesCardManagerActivity() throws Exception {
+        /*
+        activity.runOnUiThread(
+          new Runnable() {
+              public void run() {
+                  launchCardManagerBtn.requestFocus();
+              }
+          }
+        );
+
+        TouchUtils.clickView(this, launchCardManagerBtn);
+        getInstrumentation().waitForIdle(
+          new Runnable() {
+              public void run() {
+                  ViewAsserts.assertOnScreen(launchCardManagerBtn, managerLayout);
+                  // TODO(jwall): check that QuizActivity has started.
+              }
+          }
+        );
+        */
+    }
 }
