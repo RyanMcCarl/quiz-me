@@ -7,7 +7,7 @@
 
 package com.marzhillstudios.quizme;
 
-import com.marzhillstudios.quizme.algorithm.TestMe;
+import com.marzhillstudios.quizme.algorithm.SM2;
 import com.marzhillstudios.quizme.data.Card;
 
 import android.test.ActivityInstrumentationTestCase2;
@@ -23,7 +23,7 @@ import junit.framework.TestCase;
  *
  */
 
-public class AlgorithmTestMeTest extends TestCase {
+public class SM2Test extends TestCase {
 
   private URL fakeURL;
    
@@ -35,21 +35,21 @@ public class AlgorithmTestMeTest extends TestCase {
   public void testScoreCardHonorsFloor() throws Exception {
       Card card = new Card("fake title", fakeURL, fakeURL);
       card.setEFactor(1.0f);
-      TestMe.scoreCard(card, 1);
+      SM2.scoreCard(card, 1);
       assertEquals(1.3f, card.getEFactor());
   }
 
   public void testScoreCard() throws Exception {
       Card card = new Card("fake title", fakeURL, fakeURL);
       card.setEFactor(2.5f);
-      TestMe.scoreCard(card, 3);
+      SM2.scoreCard(card, 3);
       assertTrue(card.getEFactor() >= 2.35f);
   }
 
   public void testCalculateIntervalForCountOne() throws Exception {
       Card card = new Card("fake title", fakeURL, fakeURL);
       card.setCount(1);
-      TestMe.calculateInterval(card);
+      SM2.calculateInterval(card);
       assertEquals(1, card.getInterval());
   }
 
@@ -57,7 +57,7 @@ public class AlgorithmTestMeTest extends TestCase {
       Card card = new Card("fake title", fakeURL, fakeURL);
       card.setEFactor(3);
       card.setCount(2);
-      TestMe.calculateInterval(card);
+      SM2.calculateInterval(card);
       assertEquals(6, card.getInterval());
   }
 
@@ -65,7 +65,7 @@ public class AlgorithmTestMeTest extends TestCase {
       Card card = new Card("fake title", fakeURL, fakeURL);
       card.setCount(2);
       card.setEFactor(2);
-      TestMe.calculateInterval(card);
+      SM2.calculateInterval(card);
       assertEquals(1, card.getInterval());
       assertEquals(1, card.getCount());
   }
@@ -75,7 +75,7 @@ public class AlgorithmTestMeTest extends TestCase {
       card.setCount(3);
       card.setInterval(6);
       card.setEFactor(3);
-      TestMe.calculateInterval(card);
+      SM2.calculateInterval(card);
       assertEquals(18, card.getInterval());
   }
 }

@@ -20,7 +20,7 @@ import java.lang.Math;
  *
  */
 
-public class TestMe {
+public class SM2 {
 
   public static final int MAX_QUALITY = 5;
   public static final int QUALITY_SUBTRACTOR = 5;
