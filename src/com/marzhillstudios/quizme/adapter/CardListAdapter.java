@@ -29,8 +29,12 @@ public class CardListAdapter extends BaseAdapter {
     private static final int TITLE_COLUMN = 1;
 
     public CardListAdapter(Context context, CardDatabase db) {
+        this(context, db.getAllCards());
+    }
+
+    public CardListAdapter(Context context, Cursor cursor) {
         this.context = context;
-        cursor = db.getAllCards();
+        this.cursor = cursor;
     }
 
 
