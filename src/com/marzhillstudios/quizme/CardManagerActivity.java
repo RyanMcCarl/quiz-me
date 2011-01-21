@@ -8,6 +8,7 @@ package com.marzhillstudios.quizme;
 
 import android.app.Activity;
 import android.widget.ListView;
+import android.view.View;
 import android.os.Bundle;
 
 import com.marzhillstudios.quizme.data.CardDatabase;
@@ -33,6 +34,8 @@ public class CardManagerActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = new CardDatabase(this);
+        listAdapter = new CardListAdapter(
+            this, db, (View) findViewById(R.layout.card_list_item));
         setContentView(R.layout.cardmanager);
         listView = (ListView) findViewById(R.id.CardManagerList);
         listView.setAdapter(listAdapter);

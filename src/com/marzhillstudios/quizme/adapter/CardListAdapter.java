@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.marzhillstudios.quizme.R;
 import com.marzhillstudios.quizme.data.CardDatabase;
 
 /**
@@ -26,17 +27,20 @@ public class CardListAdapter extends BaseAdapter {
 
     private Cursor cursor;
     private Context context;
+    private View listView;
     private static final int TITLE_COLUMN = 1;
 
-    public CardListAdapter(Context context, CardDatabase db) {
-        this(context, db.getAllCards());
+    public CardListAdapter(Context context, CardDatabase db,
+                           View listView) {
+        this(context, db.getAllCards(), listView);
     }
 
-    public CardListAdapter(Context context, Cursor cursor) {
+    public CardListAdapter(Context context, Cursor cursor,
+                           View listView) {
         this.context = context;
         this.cursor = cursor;
+        this.listView = listView;
     }
-
 
     public int getCount() {
        return cursor.getCount();
