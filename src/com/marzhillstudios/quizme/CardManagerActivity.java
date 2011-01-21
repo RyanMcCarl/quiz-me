@@ -26,7 +26,8 @@ public class CardManagerActivity extends Activity {
     private CardDatabase db;
     private CardListAdapter listAdapter;
     private ListView listView;
-    
+
+    // TODO(jwall): ActivityTest for this class.
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {

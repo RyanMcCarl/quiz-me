@@ -21,6 +21,7 @@ import com.marzhillstudios.quizme.data.CardDatabase;
  *
  */
 
+// TODO(jwall): UnitTests for this.
 public class CardListAdapter extends BaseAdapter {
 
     private Cursor cursor;
@@ -31,6 +32,7 @@ public class CardListAdapter extends BaseAdapter {
         this.context = context;
         cursor = db.getAllCards();
     }
+
 
     public int getCount() {
        return cursor.getCount();

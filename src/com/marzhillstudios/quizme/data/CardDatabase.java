@@ -15,9 +15,12 @@ import com.marzhillstudios.util.Maybe;
 import com.marzhillstudios.util.MaybeDo;
 
 /**
+ * The Data access layer for our Card Database.
+ *
  * @author jwall
  *
  */
+// TODO(jwall): Unit tests for this class.
 public class CardDatabase extends SQLiteOpenHelper {
 	
     private static final int DATABASE_VERSION = 1;
