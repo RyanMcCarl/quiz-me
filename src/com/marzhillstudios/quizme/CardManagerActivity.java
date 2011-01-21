@@ -7,9 +7,11 @@
 package com.marzhillstudios.quizme;
 
 import android.app.Activity;
+import android.widget.ListView;
 import android.os.Bundle;
 
 import com.marzhillstudios.quizme.data.CardDatabase;
+import com.marzhillstudios.quizme.adapter.CardListAdapter;
 
 /**
  * 
@@ -22,6 +24,8 @@ public class CardManagerActivity extends Activity {
     
     @SuppressWarnings("unused")
     private CardDatabase db;
+    private CardListAdapter listAdapter;
+    private ListView listView;
     
     /** Called when the activity is first created. */
     @Override
@@ -29,5 +33,8 @@ public class CardManagerActivity extends Activity {
         super.onCreate(savedInstanceState);
         db = new CardDatabase(this);
         setContentView(R.layout.cardmanager);
+        listView = (ListView) findViewById(R.id.CardManagerList);
+        listView.setAdapter(listAdapter);
     }
+
 }
