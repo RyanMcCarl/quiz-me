@@ -8,6 +8,8 @@ package com.marzhillstudios.quizme;
 
 import com.marzhillstudios.quizme.R;
 
+import android.util.Log;
+
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.TouchUtils;
 import android.test.ViewAsserts;
@@ -32,8 +34,6 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     protected Button launchQuizBtn;
     protected Button launchCardManagerBtn;
     protected View mainLayout;
-    protected View quizLayout;
-    protected View managerLayout;
     
     public MainActivityTest() {
         super("com.marzhillstudios.quizme", MainActivity.class);
@@ -45,8 +45,6 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
         launchQuizBtn = (Button) activity.findViewById(R.id.LaunchQuizBtn);
         launchCardManagerBtn = (Button) activity.findViewById(R.id.launchManagerBtn);
         mainLayout = (View) activity.findViewById(R.id.MainLayout);
-        quizLayout = (View) activity.findViewById(R.id.QuizLayout);
-        managerLayout = (View) activity.findViewById(R.id.ManagerLayout);
         
     }
 
@@ -56,40 +54,4 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
         assertNotNull(launchCardManagerBtn);
     }
 
-    protected void testLaunchQuizBtnLaunchesQuizActivity() {
-        // TODO(jwall): figure out how to actually test this.
-        activity.runOnUiThread(
-          new Runnable() {
-              public void run() {
-                  launchQuizBtn.requestFocus();
-              }
-          }
-        );
-
-        TouchUtils.clickView(this, launchQuizBtn);
-        // TODO(jwall): check that QuizActivity has started.
-        ViewAsserts.assertOnScreen(launchQuizBtn, quizLayout); 
-    }
-
-    public void testLaunchManagerBtnLaunchesCardManagerActivity() throws Exception {
-        /*
-        activity.runOnUiThread(
-          new Runnable() {
-              public void run() {
-                  launchCardManagerBtn.requestFocus();
-              }
-          }
-        );
-
-        TouchUtils.clickView(this, launchCardManagerBtn);
-        getInstrumentation().waitForIdle(
-          new Runnable() {
-              public void run() {
-                  ViewAsserts.assertOnScreen(launchCardManagerBtn, managerLayout);
-                  // TODO(jwall): check that QuizActivity has started.
-              }
-          }
-        );
-        */
-    }
 }

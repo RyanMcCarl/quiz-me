@@ -66,7 +66,7 @@ public class Card {
         this.count = count;
     }
 
-    public float getInterval() {
+    public int getInterval() {
         return interval;
     }
 
