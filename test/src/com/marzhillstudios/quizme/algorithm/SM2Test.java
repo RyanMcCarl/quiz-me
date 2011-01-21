@@ -5,12 +5,9 @@
  * http://www.apache.org/licenses/LICENSE-2.0.html
  */
 
-package com.marzhillstudios.quizme;
+package com.marzhillstudios.quizme.algorithm;
 
-import com.marzhillstudios.quizme.algorithm.SM2;
 import com.marzhillstudios.quizme.data.Card;
-
-import android.test.ActivityInstrumentationTestCase2;
 
 import java.net.URL;
 
