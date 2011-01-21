@@ -52,5 +52,30 @@ public class AlgorithmTestMeTest extends TestCase {
       TestMe.calculateInterval(card);
       assertEquals(1, card.getInterval());
   }
-}
 
+  public void testCalculateIntervalForCountTwo() throws Exception {
+      Card card = new Card("fake title", fakeURL, fakeURL);
+      card.setEFactor(3);
+      card.setCount(2);
+      TestMe.calculateInterval(card);
+      assertEquals(6, card.getInterval());
+  }
+
+  public void testCalculateIntervalEFactorTooLow() throws Exception {
+      Card card = new Card("fake title", fakeURL, fakeURL);
+      card.setCount(2);
+      card.setEFactor(2);
+      TestMe.calculateInterval(card);
+      assertEquals(1, card.getInterval());
+      assertEquals(1, card.getCount());
+  }
+
+  public void testCalculateIntervalNoExceptionCases() throws Exception {
+      Card card = new Card("fake title", fakeURL, fakeURL);
+      card.setCount(3);
+      card.setInterval(6);
+      card.setEFactor(3);
+      TestMe.calculateInterval(card);
+      assertEquals(18, card.getInterval());
+  }
+}
