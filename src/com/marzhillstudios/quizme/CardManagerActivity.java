@@ -75,6 +75,7 @@ public class CardManagerActivity extends Activity {
         }
         return dialog;
     }
+
     public CardListAdapter getListAdapter() {
         return listAdapter;
     }

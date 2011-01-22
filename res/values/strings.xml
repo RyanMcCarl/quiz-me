@@ -9,4 +9,8 @@
   <string name="CardManagerDescription">Manage the card decks. Create new cards, import/export, delete cards</string>
   <string name="NewCard">New Card</string>
   <string name="NewCardDialogTitle">Create Card</string>
+  <string name="NewCardChooseImage">Use an Image</string>
+  <string name="NewCardChooseText">Use Text</string>
+  <string name="NewCardDialogSide1">Side 1</string>
+  <string name="NewCardDialogSide2">Side 2</string>
 </resources>
