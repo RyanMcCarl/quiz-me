@@ -11,8 +11,9 @@ import android.widget.ListView;
 import android.view.View;
 import android.os.Bundle;
 
-import com.marzhillstudios.quizme.data.CardDatabase;
 import com.marzhillstudios.quizme.adapter.CardListAdapter;
+import com.marzhillstudios.quizme.data.CardDatabase;
+import com.marzhillstudios.quizme.util.L;
 
 /**
  * 
@@ -33,12 +34,26 @@ public class CardManagerActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        db = new CardDatabase(this);
-        listAdapter = new CardListAdapter(
-            this, db, (View) findViewById(R.layout.card_list_item));
         setContentView(R.layout.cardmanager);
+        db = new CardDatabase(this);
+        L.d("CardManagerActivity onCreate", "Got db %s", db); 
+        listAdapter = new CardListAdapter(this, db);
+        L.d("CardManagerActivity onCreate", "Got listAdapter %s", listAdapter); 
         listView = (ListView) findViewById(R.id.CardManagerList);
+        L.d("CardManagerActivity onCreate", "Got listView %s", listView); 
         listView.setAdapter(listAdapter);
+        L.d("CardManagerActivity onCreate", "Set the adapter"); 
     }
 
+    public CardListAdapter getListAdapter() {
+        return listAdapter;
+    }
+
+    public ListView getListView() {
+        return listView;
+    }
+
+    public CardDatabase getDb() {
+        return db;
+    }
 }

@@ -17,6 +17,7 @@ import android.test.ViewAsserts;
 import android.app.Activity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 /**
  * This is a simple framework for a test of an Application.  See
@@ -33,7 +34,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     protected Activity activity;
     protected Button launchQuizBtn;
     protected Button launchCardManagerBtn;
-    protected View mainLayout;
+    protected LinearLayout mainLayout;
     
     public MainActivityTest() {
         super("com.marzhillstudios.quizme", MainActivity.class);
@@ -44,7 +45,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
         activity = this.getActivity();
         launchQuizBtn = (Button) activity.findViewById(R.id.LaunchQuizBtn);
         launchCardManagerBtn = (Button) activity.findViewById(R.id.launchManagerBtn);
-        mainLayout = (View) activity.findViewById(R.id.MainLayout);
+        mainLayout = (LinearLayout) activity.findViewById(R.id.MainLayout);
         
     }
 

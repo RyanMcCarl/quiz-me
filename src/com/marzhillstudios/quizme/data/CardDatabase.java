@@ -23,12 +23,15 @@ import com.marzhillstudios.util.MaybeDo;
 // TODO(jwall): Unit tests for this class.
 public class CardDatabase extends SQLiteOpenHelper {
 	
+    public static final int CARD_ID_COLUMN = 0;
+    public static final int CARD_TITLE_COLUMN = 1;
+
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "quiz_me_db";
     private static final String CARD_TABLE_NAME = "card_table";
     private static final String STATS_TABLE_NAME = "card_stats_table";
     private static final String TAGS_TABLE_NAME = "card_tags_table";
-    
+
     private static final String[] CARDS_TABLE_COLUMNS_ARRAY =
         {"id", "title", "file", "ef", "count", "interval", "last"};
     private static final String CARDS_TABLE_COLUMNS =

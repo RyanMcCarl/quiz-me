@@ -18,19 +18,19 @@ import android.util.Log;
 public class L {
 
     public static void i(String tag, String msg, Object... args) {
-        L.i(tag, msg, args);
+        Log.i(tag, String.format(msg, args));
     }
 
     public static void d(String tag, String msg, Object... args) {
-        L.d(tag, msg, args);
+        Log.d(tag, String.format(msg, args));
     }
 
     public static void w(String tag, String msg, Object... args) {
-        L.w(tag, msg, args);
+        Log.w(tag, String.format(msg, args));
     }
 
     public static void v(String tag, String msg, Object... args) {
-        L.v(tag, msg, args);
+        Log.v(tag, String.format(msg, args));
     }
 }
 

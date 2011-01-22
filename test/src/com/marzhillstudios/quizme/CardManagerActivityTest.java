@@ -7,6 +7,9 @@
 
 package com.marzhillstudios.quizme;
 
+import com.marzhillstudios.quizme.data.CardDatabase;
+import com.marzhillstudios.quizme.adapter.CardListAdapter;
+
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.TouchUtils;
 import android.test.ViewAsserts;
@@ -23,15 +26,22 @@ import android.view.View;
 
 public class CardManagerActivityTest extends ActivityInstrumentationTestCase2<CardManagerActivity> {
 
-    private CardManagerActivity activity;
+  private CardManagerActivity activity;
 
-    public CardManagerActivityTest() {
-        super("com.marzhillstudios.quizme", CardManagerActivity.class);
-    }
+  public CardManagerActivityTest() {
+      super("com.marzhillstudios.quizme", CardManagerActivity.class);
+  }
 
   protected void setUp() throws Exception {
     super.setUp();
     activity = this.getActivity();
   }
+
+  public void testPreconditions() {
+      assertNotNull(activity.getDb());
+      assertNotNull(activity.getListAdapter());
+      assertNotNull(activity.getListView());
+  }
+  
 }
 
