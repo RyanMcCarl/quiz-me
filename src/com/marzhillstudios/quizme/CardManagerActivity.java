@@ -7,6 +7,7 @@
 package com.marzhillstudios.quizme;
 
 import android.app.Activity;
+import android.widget.Button;
 import android.widget.ListView;
 import android.view.View;
 import android.os.Bundle;
@@ -29,13 +30,13 @@ public class CardManagerActivity extends Activity {
     private CardListAdapter listAdapter;
     private ListView listView;
 
-    // TODO(jwall): ActivityTest for this class.
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cardmanager);
         db = new CardDatabase(this);
+        Button newCardBtn = (Button) findViewById(R.id.NewCardButton);
         L.d("CardManagerActivity onCreate", "Got db %s", db); 
         listAdapter = new CardListAdapter(this, db);
         L.d("CardManagerActivity onCreate", "Got listAdapter %s", listAdapter); 

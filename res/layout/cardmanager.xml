@@ -6,12 +6,12 @@
     android:layout_height="fill_parent"
     >
   <Button android:id="@+id/NewCardButton"
-          android:layout_width="fill_parent"
-          android:layout_height="fill_parent" 
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content" 
           android:text="@string/NewCard"
           >
   </Button>
   <ListView android:id="@+id/CardManagerList"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="fill_parent" />
 </LinearLayout>

@@ -7,8 +7,9 @@
 
 package com.marzhillstudios.quizme;
 
-import com.marzhillstudios.quizme.data.CardDatabase;
 import com.marzhillstudios.quizme.adapter.CardListAdapter;
+import com.marzhillstudios.quizme.data.CardDatabase;
+import com.marzhillstudios.quizme.util.L;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.TouchUtils;
@@ -16,6 +17,7 @@ import android.test.ViewAsserts;
 
 import android.app.Activity;
 import android.view.View;
+import android.widget.Button;
 
 /**
  * Test the CardManager Activity class.
@@ -27,6 +29,8 @@ import android.view.View;
 public class CardManagerActivityTest extends ActivityInstrumentationTestCase2<CardManagerActivity> {
 
   private CardManagerActivity activity;
+  private Button newCardBtn;
+  private Layout mainLayout;
 
   public CardManagerActivityTest() {
       super("com.marzhillstudios.quizme", CardManagerActivity.class);
@@ -35,12 +39,16 @@ public class CardManagerActivityTest extends ActivityInstrumentationTestCase2<Ca
   protected void setUp() throws Exception {
     super.setUp();
     activity = this.getActivity();
+    newCardBtn = (Button) activity.findViewById(R.id.NewCardButton);
+    mainLayout = (Layout) activity.findViewById(R.id.ManagerLayout);
   }
 
   public void testPreconditions() {
       assertNotNull(activity.getDb());
       assertNotNull(activity.getListAdapter());
       assertNotNull(activity.getListView());
+      assertNotNull(mainLayout);
+      assertNotNull(newCardBtn);
   }
   
 }
