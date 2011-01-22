@@ -18,6 +18,7 @@ import android.test.ViewAsserts;
 import android.app.Activity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 /**
  * Test the CardManager Activity class.
@@ -30,7 +31,7 @@ public class CardManagerActivityTest extends ActivityInstrumentationTestCase2<Ca
 
   private CardManagerActivity activity;
   private Button newCardBtn;
-  private Layout mainLayout;
+  private LinearLayout mainLayout;
 
   public CardManagerActivityTest() {
       super("com.marzhillstudios.quizme", CardManagerActivity.class);
@@ -40,7 +41,7 @@ public class CardManagerActivityTest extends ActivityInstrumentationTestCase2<Ca
     super.setUp();
     activity = this.getActivity();
     newCardBtn = (Button) activity.findViewById(R.id.NewCardButton);
-    mainLayout = (Layout) activity.findViewById(R.id.ManagerLayout);
+    mainLayout = (LinearLayout) activity.findViewById(R.id.ManagerLayout);
   }
 
   public void testPreconditions() {
