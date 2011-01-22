@@ -51,6 +51,20 @@ public class CardManagerActivityTest extends ActivityInstrumentationTestCase2<Ca
       assertNotNull(mainLayout);
       assertNotNull(newCardBtn);
   }
+
+  public void testLaunchNewCardDialog() {
+      runTestOnUiThread(new Runnable() {
+          public void run() {
+              newCardBtn.requestFocus();
+          }
+      });
+
+      getInstrumentation().waitForIdle(new Runnable() {
+          public void run() {
+              // TODO(jwall): how to test for the presence of a dialog?
+          }
+      });
+  }
   
 }
 

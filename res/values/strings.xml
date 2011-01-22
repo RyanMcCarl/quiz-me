@@ -8,4 +8,5 @@
   <string name="CardManagerName">Card Manager</string>
   <string name="CardManagerDescription">Manage the card decks. Create new cards, import/export, delete cards</string>
   <string name="NewCard">New Card</string>
+  <string name="NewCardDialogTitle">Create Card</string>
 </resources>

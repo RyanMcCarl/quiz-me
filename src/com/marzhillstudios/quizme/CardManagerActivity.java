@@ -7,9 +7,14 @@
 package com.marzhillstudios.quizme;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.widget.Button;
 import android.widget.ListView;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.LayoutInflater;
 import android.os.Bundle;
 
 import com.marzhillstudios.quizme.adapter.CardListAdapter;
@@ -30,6 +35,8 @@ public class CardManagerActivity extends Activity {
     private CardListAdapter listAdapter;
     private ListView listView;
 
+    public static final int DIALOG_NEW_CARD = 1;
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,15 +44,37 @@ public class CardManagerActivity extends Activity {
         setContentView(R.layout.cardmanager);
         db = new CardDatabase(this);
         Button newCardBtn = (Button) findViewById(R.id.NewCardButton);
-        L.d("CardManagerActivity onCreate", "Got db %s", db); 
         listAdapter = new CardListAdapter(this, db);
-        L.d("CardManagerActivity onCreate", "Got listAdapter %s", listAdapter); 
         listView = (ListView) findViewById(R.id.CardManagerList);
-        L.d("CardManagerActivity onCreate", "Got listView %s", listView); 
         listView.setAdapter(listAdapter);
-        L.d("CardManagerActivity onCreate", "Set the adapter"); 
+
+        OnClickListener newCardListener = new OnClickListener() {
+            public void onClick(View v) {
+                showDialog(DIALOG_NEW_CARD);
+            }
+        };
+
+        newCardBtn.setOnClickListener(newCardListener);
     }
 
+    protected Dialog onCreateDialog(int id) {
+        Dialog dialog;
+        switch(id) {
+            case DIALOG_NEW_CARD:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                LayoutInflater inflater =
+                    (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                ViewGroup layoutRoot =
+                    (ViewGroup) findViewById(R.id.NewCardLayout);
+                builder.setView(
+                    inflater.inflate(R.layout.new_card_dialog, layoutRoot));
+                dialog = builder.create();
+                break;
+            default:
+                dialog = null;
+        }
+        return dialog;
+    }
     public CardListAdapter getListAdapter() {
         return listAdapter;
     }
