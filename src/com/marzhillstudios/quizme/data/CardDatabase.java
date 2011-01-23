@@ -27,22 +27,26 @@ public class CardDatabase extends SQLiteOpenHelper {
     public static final int CARD_TITLE_COLUMN = 1;
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "quiz_me_db";
-    private static final String CARD_TABLE_NAME = "card_table";
+    private static final String DATABASE_NAME = "/sdcard/quizme/quiz_me_db";
+    private static final String CARDS_TABLE_NAME = "card_table";
     private static final String STATS_TABLE_NAME = "card_stats_table";
     private static final String TAGS_TABLE_NAME = "card_tags_table";
 
     private static final String[] CARDS_TABLE_COLUMNS_ARRAY =
-        {"id", "title", "file", "ef", "count", "interval", "last"};
+        {"id", "title", "side1type", "side1", "side2type", "side2", "ef", "count", "interval", "last"};
     private static final String CARDS_TABLE_COLUMNS =
-        "'id' INT, 'title' TEXT, 'file' TEXT, 'ef' REAL, count INT, interval INT, last INTEGER";
+        "id INTEGER PRIMARY KEY ASC, title TEXT, side1 BLOB, side2 BLOB, ef REAL, count INTEGER, interval INTEGER, last INTEGER";
     private static final String[] STATS_TABLE_COLUMNS_ARRAY =
         {"card_id", "stat", "value"};
     private static final String STATS_TABLE_COLUMNS =
-        "'card_id' INT, 'stat' TEXT, 'value' INT";
+        "card_id INTEGER PRIMARY KEY ASC, stat TEXT, value INTEGER";
     private static final String[] TAGS_TABLE_COLUMNS_ARRAY =
         {"card_id", "tag"};
-    private static final String TAGS_TABLE_COLUMNS = "'card_id', 'tag' TEXT";
+    private static final String TAGS_TABLE_COLUMNS = "card_id INTEGER PRIMARY KEY ASC, tag TEXT";
+
+    private static final String CARDS_TITLE_INDEX_NAME = "card_title_index";
+    private static final String CARDS_TITLE_INDEX_COLUMN =
+        CARDS_TABLE_COLUMNS_ARRAY[CARD_TITLE_COLUMN];
     
     public CardDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -53,16 +57,18 @@ public class CardDatabase extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String card_sql = "CREATE TABLE " + CARD_TABLE_NAME + " ( "
+        String card_sql = "CREATE TABLE " + CARDS_TABLE_NAME + " ( "
             + CARDS_TABLE_COLUMNS + " );";
         String stats_sql = "CREATE TABLE " + STATS_TABLE_NAME + " ( "
             + STATS_TABLE_COLUMNS + " );";
         String tags_sql = "CREATE TABLE " + TAGS_TABLE_NAME + " ( "
             + TAGS_TABLE_COLUMNS + " );";
+        String card_title_index_sql = "CREATE INDEX "
+            + CARDS_TITLE_INDEX_NAME + " ON "
+            + CARDS_TABLE_NAME + " ( " + CARDS_TITLE_INDEX_COLUMN + " )";
         db.execSQL(card_sql);
         db.execSQL(stats_sql);
         db.execSQL(tags_sql);
-        
     }
     
     /* (non-Javadoc)
@@ -76,7 +82,7 @@ public class CardDatabase extends SQLiteOpenHelper {
     public Cursor getAllCards() {
         SQLiteDatabase db = getReadableDatabase();
         return db.query(
-            CARD_TABLE_NAME, CARDS_TABLE_COLUMNS_ARRAY, null, null, null,
+            CARDS_TABLE_NAME, CARDS_TABLE_COLUMNS_ARRAY, null, null, null,
             null, null, null);
     }
 
