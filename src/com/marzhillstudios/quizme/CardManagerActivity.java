@@ -61,18 +61,67 @@ public class CardManagerActivity extends Activity {
         Dialog dialog;
         switch(id) {
             case DIALOG_NEW_CARD:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                LayoutInflater inflater =
-                    (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                ViewGroup layoutRoot =
-                    (ViewGroup) findViewById(R.id.NewCardLayout);
-                builder.setView(
-                    inflater.inflate(R.layout.new_card_dialog, layoutRoot));
-                dialog = builder.create();
+                dialog = createNewCardDialog();
                 break;
             default:
                 dialog = null;
         }
+        return dialog;
+    }
+
+    public Dialog createNewCardDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater =
+            (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        ViewGroup layoutRoot =
+            (ViewGroup) findViewById(R.id.NewCardLayout);
+        builder.setView(inflater.inflate(R.layout.new_card_dialog, layoutRoot));
+        AlertDialog dialog = builder.create();
+
+        Button side1ImageBtn =
+            (Button) dialog.findViewById(R.id.NewCardSide1ImageBtn);
+
+        OnClickListener side1ImageBtnListener = new OnClickListener() {
+            public void onClick(View v) {
+                // TODO(jwall): we need to start an activity to get an image.
+            }
+        };
+
+        side1ImageBtn.setOnClickListener(side1ImageBtnListener);
+
+        Button side1TextBtn =
+            (Button) dialog.findViewById(R.id.NewCardSide1TextBtn);
+
+        OnClickListener side1TextBtnListener = new OnClickListener() {
+            public void onClick(View v) {
+                // TODO(jwall): we need to start an activity to write text.
+            }
+        };
+
+        side1TextBtn.setOnClickListener(side1TextBtnListener);
+
+        Button side2ImageBtn =
+            (Button) dialog.findViewById(R.id.NewCardSide2ImageBtn);
+
+        OnClickListener side2ImageBtnListener = new OnClickListener() {
+            public void onClick(View v) {
+                // TODO(jwall): we need to start an activity to get an image.
+            }
+        };
+
+        side2ImageBtn.setOnClickListener(side2ImageBtnListener);
+
+        Button side2TextBtn =
+            (Button) dialog.findViewById(R.id.NewCardSide2TextBtn);
+
+        OnClickListener side2TextBtnListener = new OnClickListener() {
+            public void onClick(View v) {
+                // TODO(jwall): we need to start an activity to write text.
+            }
+        };
+
+        side2TextBtn.setOnClickListener(side2TextBtnListener);
+
         return dialog;
     }
 
