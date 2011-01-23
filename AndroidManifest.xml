@@ -20,6 +20,10 @@
                   android:name="CardManagerActivity"
                   android:description="@string/CardManagerDescription">
         </activity>
+        <activity android:label="@string/NewCardCreatorName"
+                  android:name="NewCardCreatorActivity"
+                  android:description="@string/NewCardCreatorDescription">
+        </activity>
 </application>
 
 

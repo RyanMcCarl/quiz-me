@@ -9,6 +9,12 @@
           android:text="@string/NewCardDialogTitle"
           android:layout_width="match_parent"
           android:layout_height="wrap_content" />
+
+<TextView android:id="@+id/NewCardTitleEditable"
+          android:editable="true"
+          android:text="@string/NewCardDialogTitleDefault"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content" />
 <LinearLayout android:id="@+id/NewCardSide1"
               android:orientation="vertical"
               android:layout_width="fill_parent"
