@@ -50,6 +50,7 @@ public class NewCardCreatorActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_card_dialog);
+        db = new CardDatabase(this);
         final Activity mainContext = this;
         // TODO(jwall): I need to override the onActivityResult
         // Callback.
@@ -139,9 +140,30 @@ public class NewCardCreatorActivity extends Activity {
         titleTextBox.setOnEditorActionListener(titleTextBoxEditListener);
     }
 
+    public CardDatabase getDb() { return db; }
+    
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO(jwall): dispatch for the various request codes and result codes
         L.d("NewCardCreatorActivity onActivityResult",
-            "Recieved result from an activity");
+            "Recieved result from an activity resultCode: %d, requestCode %d",
+            resultCode, requestCode);
+        switch(requestCode) {
+            case REQUEST_SIDE1_IMAGE_RESULT:
+                L.d("NewCardCreatorActivity onActivityResult",
+                    "Recieved image result for side 1 %s", data);
+            	break;
+            case REQUEST_SIDE2_IMAGE_RESULT:
+                L.d("NewCardCreatorActivity onActivityResult",
+                    "Recieved image result for side 2 %s", data);
+            	break;
+            case REQUEST_SIDE1_TEXT_RESULT:
+            	L.d("NewCardCreatorActivity onActivityResult",
+                    "Recieved text result for side 1 %s", data);
+            	break;
+            case REQUEST_SIDE2_TEXT_RESULT:
+                L.d("NewCardCreatorActivity onActivityResult",
+                    "Recieved text result for side 2 %s", data);
+            	break;
+        }
     }
 }
