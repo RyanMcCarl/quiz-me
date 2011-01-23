@@ -28,6 +28,7 @@ import com.marzhillstudios.quizme.util.L;
  * @author Jeremy Wall <jeremy@marzhillstudios.com>
  *
  */
+// TODO(jwall): unit tests for this class.
 // TODO(jwall): should this activity implement some sendTo intents?
 // TODO(jwall): perhaps this class can also be reused to edit cards?
 public class NewCardCreatorActivity extends Activity {
