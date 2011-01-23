@@ -7,6 +7,8 @@
 package com.marzhillstudios.quizme;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -40,6 +42,7 @@ public class CardManagerActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cardmanager);
         db = new CardDatabase(this);
+        final Activity mainContext = this;
         Button newCardBtn = (Button) findViewById(R.id.NewCardButton);
         listAdapter = new CardListAdapter(this, db);
         listView = (ListView) findViewById(R.id.CardManagerList);
@@ -47,9 +50,8 @@ public class CardManagerActivity extends Activity {
 
         OnClickListener newCardListener = new OnClickListener() {
             public void onClick(View v) {
-                // TODO(jwall): start the NewCardCreatorActivity
-                // instead
-                //showDialog(DIALOG_NEW_CARD);
+                startActivity(
+                    new Intent(mainContext, NewCardCreatorActivity.class));
             }
         };
 

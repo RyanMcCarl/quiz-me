@@ -59,7 +59,7 @@ public class NewCardCreatorActivity extends Activity {
             public void onClick(View v) {
                 // TODO(jwall): we need to start an activity to get an image.
                 mainContext.startActivityForResult(
-                    new Intent(MediaStore.INTENT_ACTION_MEDIA_SEARCH),
+                    new Intent(MediaStore.ACTION_IMAGE_CAPTURE),
                     REQUEST_SIDE1_IMAGE_RESULT);
             }
         };
@@ -89,7 +89,7 @@ public class NewCardCreatorActivity extends Activity {
             public void onClick(View v) {
                 // TODO(jwall): we need to start an activity to get an image.
                 mainContext.startActivityForResult(
-                    new Intent(MediaStore.INTENT_ACTION_MEDIA_SEARCH),
+                    new Intent(MediaStore.ACTION_IMAGE_CAPTURE),
                     REQUEST_SIDE2_IMAGE_RESULT);
             }
         };
@@ -140,5 +140,7 @@ public class NewCardCreatorActivity extends Activity {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO(jwall): dispatch for the various request codes and result codes
+        L.d("NewCardCreatorActivity onActivityResult",
+            "Recieved result from an activity");
     }
 }
