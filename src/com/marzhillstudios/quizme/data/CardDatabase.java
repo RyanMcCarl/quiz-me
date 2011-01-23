@@ -17,7 +17,7 @@ import com.marzhillstudios.util.MaybeDo;
 /**
  * The Data access layer for our Card Database.
  *
- * @author jwall
+ * @author Jeremy Wall <jeremy@marzhillstudios.com>
  *
  */
 // TODO(jwall): Unit tests for this class.
