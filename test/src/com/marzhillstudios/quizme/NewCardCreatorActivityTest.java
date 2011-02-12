@@ -11,6 +11,7 @@ import android.test.TouchUtils;
 import android.test.ViewAsserts;
 
 import android.app.Activity;
+import android.widget.Button;
 import android.view.View;
 
 /**
@@ -19,15 +20,34 @@ import android.view.View;
  * @author Jeremy Wall <jeremy@marzhillstudios.com>
  *
  */
-public class NewCardCreatorActivityTest.javaTest extends ActivityInstrumentationTestCase2<NewCardCreatorActivityTest.java> {
+public class NewCardCreatorActivityTest extends ActivityInstrumentationTestCase2<NewCardCreatorActivity> {
 
-    public NewCardCreatorActivityTest.javaTest() {
-        super("com.marzhillstudios.quizme", NewCardCreatorActivityTest.java.class);
-    }
+  private NewCardCreatorActivity activity;
+  private Button side1ImgBtn;
+  private Button side1TxtBtn;
+  private Button side2ImgBtn;
+  private Button side2TxtBtn;
+
+  public NewCardCreatorActivityTest() {
+      super("com.marzhillstudios.quizme", NewCardCreatorActivity.class);
+  }
 
   protected void setUp() throws Exception {
     super.setUp();
     activity = this.getActivity();
+    side1ImgBtn = (Button) activity.findViewById(R.id.NewCardSide1ImageBtn);
+    side2ImgBtn = (Button) activity.findViewById(R.id.NewCardSide2ImageBtn);
+    side1TxtBtn = (Button) activity.findViewById(R.id.NewCardSide1TextBtn);
+    side2TxtBtn = (Button) activity.findViewById(R.id.NewCardSide2TextBtn);
   }
+
+  public void testPreconditions() {
+      assertNotNull(activity.getDb());
+      assertNotNull(side1ImgBtn);
+      assertNotNull(side2ImgBtn);
+      assertNotNull(side1TxtBtn);
+      assertNotNull(side2TxtBtn);
+  }
+
 }
 
