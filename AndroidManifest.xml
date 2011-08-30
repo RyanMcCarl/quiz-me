@@ -25,7 +25,14 @@
                   android:name="NewCardCreatorActivity"
                   android:description="@string/NewCardCreatorDescription">
         </activity>
-</application>
+        <activity android:label="@string/TextCardEditorName" 
+        		  android:description="@string/TextCardEditorDescription" android:name="TextCardEditActivity">
+            <intent-filter>
+                <data android:mimeType="text/plain"></data>
+                <action android:name="android.intent.action.EDIT"></action>
+            </intent-filter>
+        </activity>
+      </application>
 
 
 

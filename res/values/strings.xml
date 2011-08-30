@@ -16,4 +16,7 @@
   <string name="NewCardDialogSide2">Side 2</string>
   <string name="NewCardCreatorName">Create Card</string>
   <string name="NewCardCreatorDescription">Create a new card in the database</string>
+  <string name="SaveTextCardButton">Save Card Text</string>
+  <string name="TextCardEditorName">quizme text card editor</string>
+  <string name="TextCardEditorDescription">Text Card Editor for QuizMe</string>
 </resources>

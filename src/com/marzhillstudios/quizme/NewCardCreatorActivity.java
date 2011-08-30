@@ -19,7 +19,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-import com.marzhillstudios.quizme.adapter.CardListAdapter;
 import com.marzhillstudios.quizme.data.Card;
 import com.marzhillstudios.quizme.data.CardDatabase;
 import com.marzhillstudios.quizme.util.L;
@@ -53,8 +52,8 @@ public class NewCardCreatorActivity extends Activity {
     
     private Bitmap img1;
     private Bitmap img2;
-    private Bitmap txt1;
-    private Bitmap txt2;
+    private String txt1;
+    private String txt2;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,9 +83,11 @@ public class NewCardCreatorActivity extends Activity {
         OnClickListener side1TextBtnListener = new OnClickListener() {
             public void onClick(View v) {
                 // TODO(jwall): we need to start an activity to write text.
-                Intent intent = new Intent(Intent.ACTION_EDIT);
-                Uri uri = Uri.parse("file:///sdcard/dummyfile.txt");
-                intent.setDataAndType(uri, "text/plain");
+                Intent intent = new Intent(mainContext, TextCardEditActivity.class);
+                intent.putExtra(TextCardEditActivity.EXTRA_KEY, "Side 1");
+                intent.setType("text/plain");
+                L.d("NewCardCreatorAtvivtyService side1TextBtnListener",
+                		"Launching the Text editing service.");
                 mainContext.startActivityForResult(
                     intent, REQUEST_SIDE1_TEXT_RESULT);
             }
@@ -114,9 +115,11 @@ public class NewCardCreatorActivity extends Activity {
         OnClickListener side2TextBtnListener = new OnClickListener() {
             public void onClick(View v) {
                 // TODO(jwall): we need to start an activity to write text.
-                Intent intent = new Intent(Intent.ACTION_EDIT);
-                Uri uri = Uri.parse("file:///sdcard/quizme/dummyfile.txt");
-                intent.setDataAndType(uri, "text/plain");
+            	Intent intent = new Intent(mainContext, TextCardEditActivity.class);
+                intent.putExtra(TextCardEditActivity.EXTRA_KEY, "Side 2");
+                intent.setType("text/plain");
+                L.d("NewCardCreatorAtvivtyService side2TextBtnListener",
+                		"Launching the Text editing service.");
                 mainContext.startActivityForResult(
                     intent, REQUEST_SIDE2_TEXT_RESULT);
             }
@@ -172,12 +175,14 @@ public class NewCardCreatorActivity extends Activity {
                     "Recieved image result for side 2 %s", img2);
                 break;
             case REQUEST_SIDE1_TEXT_RESULT:
+            	txt1 = data.getExtras().getString(TextCardEditActivity.EXTRA_KEY);
                 L.d("NewCardCreatorActivity onActivityResult",
-                    "Recieved text result for side 1 %s", data);
+                    "Recieved text result for side 1 %s", txt1);
                 break;
             case REQUEST_SIDE2_TEXT_RESULT:
+            	txt2 = data.getExtras().getString(TextCardEditActivity.EXTRA_KEY);
                 L.d("NewCardCreatorActivity onActivityResult",
-                    "Recieved text result for side 2 %s", data);
+                    "Recieved text result for side 2 %s", txt2);
                 break;
         }
     }
