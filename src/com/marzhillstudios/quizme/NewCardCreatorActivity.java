@@ -8,6 +8,7 @@ package com.marzhillstudios.quizme;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.marzhillstudios.quizme.adapter.CardListAdapter;
+import com.marzhillstudios.quizme.data.Card;
 import com.marzhillstudios.quizme.data.CardDatabase;
 import com.marzhillstudios.quizme.util.L;
 
@@ -45,6 +47,14 @@ public class NewCardCreatorActivity extends Activity {
     private Button side2ImageBtn;
     private Button side2TextBtn;
     private TextView titleTextBox;
+
+    private int side1Type;
+    private int side2Type;
+    
+    private Bitmap img1;
+    private Bitmap img2;
+    private Bitmap txt1;
+    private Bitmap txt2;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -148,22 +158,27 @@ public class NewCardCreatorActivity extends Activity {
             "Recieved result from an activity resultCode: %d, requestCode %d",
             resultCode, requestCode);
         switch(requestCode) {
+            // TODO(jwall): the following is now testable so go write some :-)
             case REQUEST_SIDE1_IMAGE_RESULT:
+                img1 = (Bitmap) data.getExtras().getParcelable("data");
+                side1Type = Card.IMAGE_TYPE;
                 L.d("NewCardCreatorActivity onActivityResult",
-                    "Recieved image result for side 1 %s", data);
-            	break;
+                    "Recieved image result for side 1 image: %s", img1);
+                break;
             case REQUEST_SIDE2_IMAGE_RESULT:
+                img2 = (Bitmap) data.getExtras().getParcelable("data");
+                side2Type = Card.IMAGE_TYPE;
                 L.d("NewCardCreatorActivity onActivityResult",
-                    "Recieved image result for side 2 %s", data);
-            	break;
+                    "Recieved image result for side 2 %s", img2);
+                break;
             case REQUEST_SIDE1_TEXT_RESULT:
-            	L.d("NewCardCreatorActivity onActivityResult",
+                L.d("NewCardCreatorActivity onActivityResult",
                     "Recieved text result for side 1 %s", data);
-            	break;
+                break;
             case REQUEST_SIDE2_TEXT_RESULT:
                 L.d("NewCardCreatorActivity onActivityResult",
                     "Recieved text result for side 2 %s", data);
-            	break;
+                break;
         }
     }
 }

@@ -35,7 +35,9 @@ public class CardDatabase extends SQLiteOpenHelper {
     private static final String[] CARDS_TABLE_COLUMNS_ARRAY =
         {"id", "title", "side1type", "side1", "side2type", "side2", "ef", "count", "interval", "last"};
     private static final String CARDS_TABLE_COLUMNS =
-        "id INTEGER PRIMARY KEY ASC, title TEXT, side1 BLOB, side2 BLOB, ef REAL, count INTEGER, interval INTEGER, last INTEGER";
+        "id INTEGER PRIMARY KEY ASC, title TEXT, side1type INTEGER, "
+	+ " side1 BLOB, side2type INTEGER, side2 BLOB, ef REAL, "
+	+ "count INTEGER, interval INTEGER, last INTEGER";
     private static final String[] STATS_TABLE_COLUMNS_ARRAY =
         {"card_id", "stat", "value"};
     private static final String STATS_TABLE_COLUMNS =

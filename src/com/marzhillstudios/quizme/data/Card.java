@@ -15,15 +15,18 @@ import java.util.Date;
  * @author Jeremy Wall <jeremy@marzhillstudios.com>
  *
  */
-public class Card {
+public class Card<S1, S2> {
+
+    public static final int IMAGE_TYPE = 0;
+    public static final int TEXT_TYPE = 1;
 
     // identifier in the database
     public int id;
     // the cards title
     public String title;
     // urls pointing to the files the card has
-    public URL side1;
-    public URL side2;
+    public S1 side1;
+    public S2 side2;
     // the current e-factor for this card
     public float eFactor = 2.5f;
     public int count = 0;
@@ -31,7 +34,7 @@ public class Card {
     public int interval;
     
     public Card(
-        int id, String title, URL side1, URL side2, float eFactor) {
+        int id, String title, S1 side1, S2 side2, float eFactor) {
       this.id = id;
       this.title = title;
       this.side1 = side1;
@@ -39,7 +42,7 @@ public class Card {
       this.eFactor = eFactor;
     }
 
-    public Card(String title, URL side1, URL side2) {
+    public Card(String title, S1 side1, S2 side2) {
       this.title = title;
       this.side1 = side1;
       this.side2 = side2;
