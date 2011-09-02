@@ -8,7 +8,6 @@ package com.marzhillstudios.quizme;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.KeyEvent;
@@ -50,10 +49,8 @@ public class NewCardCreatorActivity extends Activity {
     private int side1Type;
     private int side2Type;
     
-    private Bitmap img1;
-    private Bitmap img2;
-    private String txt1;
-    private String txt2;
+    private String side1;
+    private String side2;
     
     private String fileNamePrefix;
     
@@ -167,43 +164,43 @@ public class NewCardCreatorActivity extends Activity {
             // TODO(jwall): the following is now testable so go write some :-)
             case REQUEST_SIDE1_IMAGE_RESULT:
             	// TODO(jwall): Verify the correct way to get the camera image.
-                img1 = (Bitmap) data.getExtras().getParcelable("data");
-                side1Type = Card.IMAGE_TYPE;
+                // TODO side1 = (Bitmap) data.getExtras().getParcelable("data");
+                setSide1Type(Card.IMAGE_TYPE);
                 L.d("NewCardCreatorActivity onActivityResult",
-                    "Recieved image result for side 1 image: %s", img1);
+                    "Recieved image result for side 1 image: %s", side1);
                 break;
             case REQUEST_SIDE2_IMAGE_RESULT:
-                img2 = (Bitmap) data.getExtras().getParcelable("data");
-                side2Type = Card.IMAGE_TYPE;
+                // TODO side2 = (Bitmap) data.getExtras().getParcelable("data");
+                setSide2Type(Card.IMAGE_TYPE);
                 L.d("NewCardCreatorActivity onActivityResult",
-                    "Recieved image result for side 2 %s", img2);
+                    "Recieved image result for side 2 %s", side2);
                 break;
             case REQUEST_SIDE1_TEXT_RESULT:
-            	txt1 = data.getExtras().getString(TextCardEditActivity.EXTRA_KEY);
+            	side1 = data.getExtras().getString(TextCardEditActivity.EXTRA_KEY);
                 L.d("NewCardCreatorActivity onActivityResult",
-                    "Recieved text result for side 1 %s", txt1);
+                    "Recieved text result for side 1 %s", side1);
                 break;
             case REQUEST_SIDE2_TEXT_RESULT:
-            	txt2 = data.getExtras().getString(TextCardEditActivity.EXTRA_KEY);
+            	side2 = data.getExtras().getString(TextCardEditActivity.EXTRA_KEY);
                 L.d("NewCardCreatorActivity onActivityResult",
-                    "Recieved text result for side 2 %s", txt2);
+                    "Recieved text result for side 2 %s", side2);
                 break;
         }
-        if (side1Type == Card.IMAGE_TYPE && side2Type == Card.TEXT_TYPE) {
-        	Card<Bitmap, String> card = new Card<Bitmap, String>("foo", img1, txt2);
-            db.upsertCard(card);
-        }
-        if (side1Type == Card.TEXT_TYPE && side2Type == Card.TEXT_TYPE) {
-        	Card<String, Bitmap> card = new Card<String, Bitmap>("foo", txt1, img2);
-            db.upsertCard(card);
-        }
-        if (side1Type == Card.IMAGE_TYPE && side2Type == Card.IMAGE_TYPE) {
-        	Card<Bitmap, Bitmap> card = new Card<Bitmap, Bitmap>("foo", img1, img2);
-            db.upsertCard(card);
-        }
-        if (side1Type == Card.TEXT_TYPE && side2Type == Card.TEXT_TYPE) {
-        	Card<String, String> card = new Card<String, String>("foo", txt1, txt2);
-            db.upsertCard(card);
-        }
     }
+
+	public int getSide1Type() {
+		return side1Type;
+	}
+
+	public void setSide1Type(int side1Type) {
+		this.side1Type = side1Type;
+	}
+
+	public int getSide2Type() {
+		return side2Type;
+	}
+
+	public void setSide2Type(int side2Type) {
+		this.side2Type = side2Type;
+	}
 }

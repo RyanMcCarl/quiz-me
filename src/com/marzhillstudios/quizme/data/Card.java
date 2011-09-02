@@ -14,7 +14,7 @@ import java.util.Date;
  * @author Jeremy Wall <jeremy@marzhillstudios.com>
  *
  */
-public class Card<S1, S2> {
+public class Card {
 
     public static final int IMAGE_TYPE = 0;
     public static final int TEXT_TYPE = 1;
@@ -26,8 +26,8 @@ public class Card<S1, S2> {
     
     public int side1Type;
     public int side2Type;
-    public S1 side1;
-    public S2 side2;
+    public String side1;
+    public String side2;
     // the current e-factor for this card
     public float eFactor = 2.5f;
     public int count = 0;
@@ -35,7 +35,7 @@ public class Card<S1, S2> {
     public int interval;
     
     public Card(
-        int id, String title, S1 side1, S2 side2, float eFactor) {
+        int id, String title, String side1, String side2, float eFactor) {
       this.id = id;
       this.title = title;
       this.side1 = side1;
@@ -43,7 +43,7 @@ public class Card<S1, S2> {
       this.eFactor = eFactor;
     }
 
-    public Card(String title, S1 side1, S2 side2) {
+    public Card(String title, String side1, String side2) {
       this.title = title;
       this.side1 = side1;
       this.side2 = side2;
@@ -84,5 +84,9 @@ public class Card<S1, S2> {
     
     public Date getLastTime() {
     	return lastTime;
+    }
+    
+    public Long getLastTimeMillis() {
+    	return lastTime.getTime();
     }
 }

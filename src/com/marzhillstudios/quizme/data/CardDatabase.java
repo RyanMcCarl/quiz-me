@@ -11,8 +11,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 /**
  * The Data access layer for our Card Database.
@@ -92,7 +90,7 @@ public class CardDatabase extends SQLiteOpenHelper {
      * @param id The primary key for the card in the database.
      * @returns Maybe card. @see com.marzhillstudios.util.Maybe
      */
-    public Card<?, ?> getCard(Integer id) {
+    public Card getCard(Integer id) {
     	SQLiteDatabase db = getReadableDatabase();
     	String[] selectionArgs  = { id.toString() };
     	Cursor cur = db.query(CARDS_TABLE_NAME, CARDS_TABLE_COLUMNS_ARRAY, "id = ?", selectionArgs, null, null, null);
@@ -105,54 +103,19 @@ public class CardDatabase extends SQLiteOpenHelper {
     		Integer count = cur.getInt(7);
     		Integer interval = cur.getInt(8);
     		Long last = cur.getLong(9);
-    		if (side1Type == Card.IMAGE_TYPE && side2Type == Card.TEXT_TYPE) {
-    			byte[] data = cur.getBlob(3);
-    			Bitmap img1 = BitmapFactory.decodeByteArray(data, 0, data.length);
-    			String txt2 = cur.getString(5);
-    			Card<Bitmap, String> card = new Card<Bitmap, String>(ident, title, img1, txt2, ef);
-    			card.setCount(count);
-    			card.setInterval(interval);
-    			card.setLastTime(last);
-    			card.side1Type = side1Type;
-    			card.side2Type = side2Type;
-    			return card;
-    		} else if (side1Type == Card.IMAGE_TYPE && side2Type == Card.IMAGE_TYPE) {
-    			byte[] data1 = cur.getBlob(3);
-    			Bitmap img1 = BitmapFactory.decodeByteArray(data1, 0, data1.length);
-    			byte[] data2 = cur.getBlob(5);
-    			Bitmap img2 = BitmapFactory.decodeByteArray(data2, 0, data2.length);
-    			Card<Bitmap, Bitmap> card = new Card<Bitmap, Bitmap>(ident, title, img1, img2, ef);
-    			card.setCount(count);
-    			card.setInterval(interval);
-    			card.setLastTime(last);
-    			card.side1Type = side1Type;
-    			card.side2Type = side2Type;
-    			return card;
-    		} else if (side1Type == Card.TEXT_TYPE && side2Type == Card.IMAGE_TYPE) {
-    			byte[] data = cur.getBlob(5);
-    			Bitmap img2 = BitmapFactory.decodeByteArray(data, 0, data.length);
-    			String txt1 = cur.getString(3);
-    			Card<String, Bitmap> card = new Card<String, Bitmap>(ident, title, txt1, img2, ef);
-    			card.setCount(count);
-    			card.setInterval(interval);
-    			card.setLastTime(last);
-    			card.side1Type = side1Type;
-    			card.side2Type = side2Type;
-    			return card;
-    		} else if (side1Type == Card.TEXT_TYPE && side2Type == Card.TEXT_TYPE) {
-    			String txt1 = cur.getString(3);
-    			String txt2 = cur.getString(5);
-    			Card<String, String> card = new Card<String, String>(ident, title, txt1, txt2, ef);
-    			card.setCount(count);
-    			card.setInterval(interval);
-    			card.setLastTime(last);
-    			card.side1Type = side1Type;
-    			card.side2Type = side2Type;
-    			return card;
-    		}
+    		String side1 = cur.getString(3);
+    		String side2 = cur.getString(5);
+    		Card card = new Card(ident, title, side1, side2, ef);
+   			card.setCount(count);
+   			card.setInterval(interval);
+   			card.setLastTime(last);
+   			card.side1Type = side1Type;
+   			card.side2Type = side2Type;
+    		return card;
     	}
         return null;
     }
+    
     
     /**
      * Update/Insert a card in the database.
@@ -160,19 +123,15 @@ public class CardDatabase extends SQLiteOpenHelper {
      * @param card a Card<S1, S2>.
      * @returns a Card<S1, S2>.
      */
-    public Card<?, ?> upsertCard(Card<?, ?> card) {
+    public Card upsertCard(Card card) {
     	SQLiteDatabase db = getReadableDatabase();
     	ContentValues values = new ContentValues();
 		values.put("title", card.getId());
 		values.put("side1Type", card.side1Type);
-		if (card.side1Type == Card.IMAGE_TYPE) {
-			byte[] img1 = { };
-			values.put("side1", img1);
-		} else {
-			values.put("side1", (String) card.side1); 
-		}
+		values.put("side1", card.side1);
 		values.put("side2Type", card.side2Type);
-    	Card<?, ?> c1 = getCard(card.getId());
+		values.put("side2", card.side2);
+    	Card c1 = getCard(card.getId());
     	if (c1 == null) {
     		// an insert then
     		db.insertOrThrow(CARDS_TABLE_NAME, null, values);
@@ -186,7 +145,7 @@ public class CardDatabase extends SQLiteOpenHelper {
     
     
     /** Delete a card in the database. */
-    public void deleteCard(Card<?, ?> card) {
+    public void deleteCard(Card card) {
         deleteCard(card.getId());
     }
     
