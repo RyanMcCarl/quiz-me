@@ -6,9 +6,13 @@
 
 package com.marzhillstudios.quizme;
 
+import java.io.File;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.KeyEvent;
 import android.view.View;
@@ -53,6 +57,10 @@ public class NewCardCreatorActivity extends Activity {
     private String side2;
     
     private String fileNamePrefix;
+
+	protected Uri imageUriSide2;
+
+	protected Uri imageUriSide1;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,9 +75,12 @@ public class NewCardCreatorActivity extends Activity {
         OnClickListener side1ImageBtnListener = new OnClickListener() {
             public void onClick(View v) {
                 // TODO(jwall): we need to start an activity to capture an image.
-            	Intent imgIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            	imgIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileNamePrefix + "side1");
-                mainContext.startActivityForResult(imgIntent,
+            	Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            	File photo = new File(Environment.getExternalStorageDirectory(),  fileNamePrefix + "side1.png");
+                intent.putExtra(MediaStore.EXTRA_OUTPUT,
+                        Uri.fromFile(photo));
+                imageUriSide1 = Uri.fromFile(photo);
+                mainContext.startActivityForResult(intent,
                     REQUEST_SIDE1_IMAGE_RESULT);
             }
         };
@@ -100,9 +111,12 @@ public class NewCardCreatorActivity extends Activity {
         OnClickListener side2ImageBtnListener = new OnClickListener() {
             public void onClick(View v) {
                 // TODO(jwall): we need to start an activity to capture an image.
-            	Intent imgIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            	imgIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileNamePrefix + "side1");
-                mainContext.startActivityForResult(imgIntent,
+            	Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            	File photo = new File(Environment.getExternalStorageDirectory(),  fileNamePrefix + "side2.png");
+                intent.putExtra(MediaStore.EXTRA_OUTPUT,
+                        Uri.fromFile(photo));
+                imageUriSide2 = Uri.fromFile(photo);
+                mainContext.startActivityForResult(intent,
                     REQUEST_SIDE2_IMAGE_RESULT);
             }
         };
@@ -163,24 +177,26 @@ public class NewCardCreatorActivity extends Activity {
         switch(requestCode) {
             // TODO(jwall): the following is now testable so go write some :-)
             case REQUEST_SIDE1_IMAGE_RESULT:
-            	// TODO(jwall): Verify the correct way to get the camera image.
-                // TODO side1 = (Bitmap) data.getExtras().getParcelable("data");
+            	// TODO side1 = (Bitmap) data.getExtras().getParcelable("data");
                 setSide1Type(Card.IMAGE_TYPE);
+                side1 = imageUriSide1.toString();
                 L.d("NewCardCreatorActivity onActivityResult",
                     "Recieved image result for side 1 image: %s", side1);
                 break;
             case REQUEST_SIDE2_IMAGE_RESULT:
-                // TODO side2 = (Bitmap) data.getExtras().getParcelable("data");
                 setSide2Type(Card.IMAGE_TYPE);
+                side2 = imageUriSide2.toString();
                 L.d("NewCardCreatorActivity onActivityResult",
                     "Recieved image result for side 2 %s", side2);
                 break;
             case REQUEST_SIDE1_TEXT_RESULT:
+            	setSide1Type(Card.TEXT_TYPE);
             	side1 = data.getExtras().getString(TextCardEditActivity.EXTRA_KEY);
                 L.d("NewCardCreatorActivity onActivityResult",
                     "Recieved text result for side 1 %s", side1);
                 break;
             case REQUEST_SIDE2_TEXT_RESULT:
+            	setSide2Type(Card.TEXT_TYPE);
             	side2 = data.getExtras().getString(TextCardEditActivity.EXTRA_KEY);
                 L.d("NewCardCreatorActivity onActivityResult",
                     "Recieved text result for side 2 %s", side2);

@@ -44,6 +44,19 @@ public class CardDatabase extends SQLiteOpenHelper {
     private static final String CARDS_TITLE_INDEX_COLUMN =
         CARDS_TABLE_COLUMNS_ARRAY[CARD_TITLE_COLUMN];
     
+    public static ContentValues contentValuesFromCard(Card card) {
+    	ContentValues values = new ContentValues();
+		values.put("title", card.getId());
+		values.put("side1Type", card.side1Type);
+		values.put("side1", card.side1);
+		values.put("side2Type", card.side2Type);
+		values.put("side2", card.side2);
+		values.put("ef", card.getEFactor());
+		values.put("count", card.getCount());
+		values.put("interval", card.getInterval());
+		values.put("last", card.getLastTimeMillis());
+		return values;
+    }
     public CardDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -88,12 +101,13 @@ public class CardDatabase extends SQLiteOpenHelper {
      * Get a card from the database.
      *
      * @param id The primary key for the card in the database.
-     * @returns Maybe card. @see com.marzhillstudios.util.Maybe
+     * @returns card.
      */
     public Card getCard(Integer id) {
     	SQLiteDatabase db = getReadableDatabase();
     	String[] selectionArgs  = { id.toString() };
-    	Cursor cur = db.query(CARDS_TABLE_NAME, CARDS_TABLE_COLUMNS_ARRAY, "id = ?", selectionArgs, null, null, null);
+    	Cursor cur = db.query(CARDS_TABLE_NAME, CARDS_TABLE_COLUMNS_ARRAY, "id = ?",
+    			selectionArgs, null, null, null);
     	if (cur.getColumnCount() == 1) {
     		Integer ident = cur.getInt(0);
     		String title = cur.getString(1);
@@ -124,21 +138,16 @@ public class CardDatabase extends SQLiteOpenHelper {
      * @returns a Card<S1, S2>.
      */
     public Card upsertCard(Card card) {
-    	SQLiteDatabase db = getReadableDatabase();
-    	ContentValues values = new ContentValues();
-		values.put("title", card.getId());
-		values.put("side1Type", card.side1Type);
-		values.put("side1", card.side1);
-		values.put("side2Type", card.side2Type);
-		values.put("side2", card.side2);
+    	SQLiteDatabase db = getWritableDatabase();
+    	ContentValues values = contentValuesFromCard(card);
     	Card c1 = getCard(card.getId());
     	if (c1 == null) {
     		// an insert then
     		db.insertOrThrow(CARDS_TABLE_NAME, null, values);
     	} else {
+    		// an update
     		String[] whereArgs = { new Integer(card.getId()).toString() };
         	db.update(CARDS_TABLE_NAME, values, "id = ?", whereArgs);
-    		// an update
     	}
     	return card;
     }
@@ -155,7 +164,7 @@ public class CardDatabase extends SQLiteOpenHelper {
      * @param id The integer primary key for the key in the database.
      */
     public void deleteCard(Integer id) {
-    	SQLiteDatabase db = getReadableDatabase();
+    	SQLiteDatabase db = getWritableDatabase();
     	String[] whereArgs = { id.toString() };
     	db.delete(CARDS_TABLE_NAME, "id = ?", whereArgs);
     }
