@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.marzhillstudios.quizme.R;
 import com.marzhillstudios.quizme.data.CardDatabase;
 
 /**
@@ -43,7 +42,9 @@ public class CardListAdapter extends BaseAdapter {
 
     private class CardView extends LinearLayout {
 
+      @SuppressWarnings("unused")
       private String title;
+      @SuppressWarnings("unused")
       private int id;
       private TextView listItem;
       
@@ -53,7 +54,7 @@ public class CardListAdapter extends BaseAdapter {
         this.id = id;
         listItem = new TextView(context);
         setTitle(title);
-	addView(listItem,
+        addView(listItem,
                 new LinearLayout.LayoutParams(
                     LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
       }

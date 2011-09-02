@@ -29,7 +29,7 @@ public class SM2 {
   /**
    * Score a Card and set it's correct E-Factor.
    */
-  public static void scoreCard(Card card, int quality) {
+  public static void scoreCard(Card<?, ?> card, int quality) {
       float qFactor = (QUALITY_SUBTRACTOR - quality);
       float newFactor = card.getEFactor() + (0.1f - qFactor * (0.08f + qFactor * 0.02f));
       if (newFactor < E_FACTOR_FLOOR) {
@@ -38,7 +38,7 @@ public class SM2 {
       card.setEFactor(newFactor);
   }
 
-  public static void calculateInterval(Card card) {
+  public static void calculateInterval(Card<?, ?> card) {
       int interval = 1;
       if (card.getEFactor() < 3) {
           card.setCount(1);

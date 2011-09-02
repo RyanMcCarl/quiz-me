@@ -7,20 +7,15 @@
 package com.marzhillstudios.quizme;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.ListView;
 
 import com.marzhillstudios.quizme.adapter.CardListAdapter;
 import com.marzhillstudios.quizme.data.CardDatabase;
-import com.marzhillstudios.quizme.util.L;
 
 /**
  * 
@@ -31,7 +26,6 @@ import com.marzhillstudios.quizme.util.L;
  */
 public class CardManagerActivity extends Activity {
     
-    @SuppressWarnings("unused")
     private CardDatabase db;
     private CardListAdapter listAdapter;
     private ListView listView;

@@ -6,7 +6,6 @@
 
 package com.marzhillstudios.quizme.data;
 
-import java.net.URL;
 import java.util.Date;
 
 /**
@@ -24,7 +23,9 @@ public class Card<S1, S2> {
     public int id;
     // the cards title
     public String title;
-    // urls pointing to the files the card has
+    
+    public int side1Type;
+    public int side2Type;
     public S1 side1;
     public S2 side2;
     // the current e-factor for this card
@@ -75,5 +76,13 @@ public class Card<S1, S2> {
 
     public void setInterval(int interval) {
         this.interval = interval;
+    }
+    
+    public void setLastTime(Long t) {
+    	this.lastTime = new Date(t);
+    }
+    
+    public Date getLastTime() {
+    	return lastTime;
     }
 }

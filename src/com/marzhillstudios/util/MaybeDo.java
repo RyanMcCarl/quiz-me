@@ -26,5 +26,5 @@ public abstract class MaybeDo<T> {
         }
     }
 
-    abstract Maybe<T> doFn(T arg);
+    public abstract Maybe<T> doFn(T arg);
 }

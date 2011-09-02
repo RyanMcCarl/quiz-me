@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/PlainTextEditor"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:weightSum="1">
+    <EditText android:layout_width="match_parent" android:id="@+id/defaultEditTextBox" android:layout_height="wrap_content" android:layout_weight="0.90">
+        <requestFocus></requestFocus>
+    </EditText>
+    <Button android:id="@+id/saveTextBtn" android:layout_height="wrap_content" android:layout_weight="0.1" android:layout_width="match_parent" android:text="@string/SaveTextCardButton">
+   </Button>
+</LinearLayout>

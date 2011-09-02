@@ -6,13 +6,13 @@
 
 package com.marzhillstudios.quizme.data;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import com.marzhillstudios.util.Maybe;
-import com.marzhillstudios.util.MaybeDo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 /**
  * The Data access layer for our Card Database.
@@ -38,12 +38,8 @@ public class CardDatabase extends SQLiteOpenHelper {
         "id INTEGER PRIMARY KEY ASC, title TEXT, side1type INTEGER, "
 	+ " side1 BLOB, side2type INTEGER, side2 BLOB, ef REAL, "
 	+ "count INTEGER, interval INTEGER, last INTEGER";
-    private static final String[] STATS_TABLE_COLUMNS_ARRAY =
-        {"card_id", "stat", "value"};
     private static final String STATS_TABLE_COLUMNS =
         "card_id INTEGER PRIMARY KEY ASC, stat TEXT, value INTEGER";
-    private static final String[] TAGS_TABLE_COLUMNS_ARRAY =
-        {"card_id", "tag"};
     private static final String TAGS_TABLE_COLUMNS = "card_id INTEGER PRIMARY KEY ASC, tag TEXT";
 
     private static final String CARDS_TITLE_INDEX_NAME = "card_title_index";
@@ -71,6 +67,7 @@ public class CardDatabase extends SQLiteOpenHelper {
         db.execSQL(card_sql);
         db.execSQL(stats_sql);
         db.execSQL(tags_sql);
+        db.execSQL(card_title_index_sql);
     }
     
     /* (non-Javadoc)
@@ -88,32 +85,108 @@ public class CardDatabase extends SQLiteOpenHelper {
             null, null, null);
     }
 
+    // TODO(jwall): Actually do the Database operations below
     /**
      * Get a card from the database.
      *
      * @param id The primary key for the card in the database.
      * @returns Maybe card. @see com.marzhillstudios.util.Maybe
      */
-    public Maybe<Card> getCard(int id) {
-        return new Maybe<Card>();
+    public Card<?, ?> getCard(Integer id) {
+    	SQLiteDatabase db = getReadableDatabase();
+    	String[] selectionArgs  = { id.toString() };
+    	Cursor cur = db.query(CARDS_TABLE_NAME, CARDS_TABLE_COLUMNS_ARRAY, "id = ?", selectionArgs, null, null, null);
+    	if (cur.getColumnCount() == 1) {
+    		Integer ident = cur.getInt(0);
+    		String title = cur.getString(1);
+    		Integer side1Type = cur.getInt(2);
+    		Integer side2Type = cur.getInt(4);
+    		Float ef = cur.getFloat(6);
+    		Integer count = cur.getInt(7);
+    		Integer interval = cur.getInt(8);
+    		Long last = cur.getLong(9);
+    		if (side1Type == Card.IMAGE_TYPE && side2Type == Card.TEXT_TYPE) {
+    			byte[] data = cur.getBlob(3);
+    			Bitmap img1 = BitmapFactory.decodeByteArray(data, 0, data.length);
+    			String txt2 = cur.getString(5);
+    			Card<Bitmap, String> card = new Card<Bitmap, String>(ident, title, img1, txt2, ef);
+    			card.setCount(count);
+    			card.setInterval(interval);
+    			card.setLastTime(last);
+    			card.side1Type = side1Type;
+    			card.side2Type = side2Type;
+    			return card;
+    		} else if (side1Type == Card.IMAGE_TYPE && side2Type == Card.IMAGE_TYPE) {
+    			byte[] data1 = cur.getBlob(3);
+    			Bitmap img1 = BitmapFactory.decodeByteArray(data1, 0, data1.length);
+    			byte[] data2 = cur.getBlob(5);
+    			Bitmap img2 = BitmapFactory.decodeByteArray(data2, 0, data2.length);
+    			Card<Bitmap, Bitmap> card = new Card<Bitmap, Bitmap>(ident, title, img1, img2, ef);
+    			card.setCount(count);
+    			card.setInterval(interval);
+    			card.setLastTime(last);
+    			card.side1Type = side1Type;
+    			card.side2Type = side2Type;
+    			return card;
+    		} else if (side1Type == Card.TEXT_TYPE && side2Type == Card.IMAGE_TYPE) {
+    			byte[] data = cur.getBlob(5);
+    			Bitmap img2 = BitmapFactory.decodeByteArray(data, 0, data.length);
+    			String txt1 = cur.getString(3);
+    			Card<String, Bitmap> card = new Card<String, Bitmap>(ident, title, txt1, img2, ef);
+    			card.setCount(count);
+    			card.setInterval(interval);
+    			card.setLastTime(last);
+    			card.side1Type = side1Type;
+    			card.side2Type = side2Type;
+    			return card;
+    		} else if (side1Type == Card.TEXT_TYPE && side2Type == Card.TEXT_TYPE) {
+    			String txt1 = cur.getString(3);
+    			String txt2 = cur.getString(5);
+    			Card<String, String> card = new Card<String, String>(ident, title, txt1, txt2, ef);
+    			card.setCount(count);
+    			card.setInterval(interval);
+    			card.setLastTime(last);
+    			card.side1Type = side1Type;
+    			card.side2Type = side2Type;
+    			return card;
+    		}
+    	}
+        return null;
     }
     
     /**
      * Update/Insert a card in the database.
      *
-     * Maybe updates or Inserts a card in the database. For details about
-     * The Maybe generic class @see @see com.marzhillstudios.util.Maybe
-     * and @see com.marzhillstudios.util.MaybeDo.
-     * 
-     * @param card a Maybe<Card> .
-     * @returns a Maybe<Card>.
+     * @param card a Card<S1, S2>.
+     * @returns a Card<S1, S2>.
      */
-    public Maybe<Card> upsertCard(Maybe<Card> card) {
-        return new Maybe<Card>();
+    public Card<?, ?> upsertCard(Card<?, ?> card) {
+    	SQLiteDatabase db = getReadableDatabase();
+    	ContentValues values = new ContentValues();
+		values.put("title", card.getId());
+		values.put("side1Type", card.side1Type);
+		if (card.side1Type == Card.IMAGE_TYPE) {
+			byte[] img1 = { };
+			values.put("side1", img1);
+		} else {
+			values.put("side1", (String) card.side1); 
+		}
+		values.put("side2Type", card.side2Type);
+    	Card<?, ?> c1 = getCard(card.getId());
+    	if (c1 == null) {
+    		// an insert then
+    		db.insertOrThrow(CARDS_TABLE_NAME, null, values);
+    	} else {
+    		String[] whereArgs = { new Integer(card.getId()).toString() };
+        	db.update(CARDS_TABLE_NAME, values, "id = ?", whereArgs);
+    		// an update
+    	}
+    	return card;
     }
     
+    
     /** Delete a card in the database. */
-    public void deleteCard(Card card) {
+    public void deleteCard(Card<?, ?> card) {
         deleteCard(card.getId());
     }
     
@@ -122,6 +195,9 @@ public class CardDatabase extends SQLiteOpenHelper {
      *
      * @param id The integer primary key for the key in the database.
      */
-    public void deleteCard(int id) {
+    public void deleteCard(Integer id) {
+    	SQLiteDatabase db = getReadableDatabase();
+    	String[] whereArgs = { id.toString() };
+    	db.delete(CARDS_TABLE_NAME, "id = ?", whereArgs);
     }
 }

@@ -9,13 +9,13 @@ package com.marzhillstudios.quizme;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -45,7 +45,7 @@ public class NewCardCreatorActivity extends Activity {
     private Button side1TextBtn;
     private Button side2ImageBtn;
     private Button side2TextBtn;
-    private TextView titleTextBox;
+    private EditText titleTextBox;
 
     private int side1Type;
     private int side2Type;
@@ -55,22 +55,24 @@ public class NewCardCreatorActivity extends Activity {
     private String txt1;
     private String txt2;
     
+    private String fileNamePrefix;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_card_dialog);
         db = new CardDatabase(this);
         final Activity mainContext = this;
-        // TODO(jwall): I need to override the onActivityResult
-        // Callback.
+        
         side1ImageBtn =
             (Button) findViewById(R.id.NewCardSide1ImageBtn);
 
         OnClickListener side1ImageBtnListener = new OnClickListener() {
             public void onClick(View v) {
-                // TODO(jwall): we need to start an activity to get an image.
-                mainContext.startActivityForResult(
-                    new Intent(MediaStore.ACTION_IMAGE_CAPTURE),
+                // TODO(jwall): we need to start an activity to capture an image.
+            	Intent imgIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            	imgIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileNamePrefix + "side1");
+                mainContext.startActivityForResult(imgIntent,
                     REQUEST_SIDE1_IMAGE_RESULT);
             }
         };
@@ -100,9 +102,10 @@ public class NewCardCreatorActivity extends Activity {
 
         OnClickListener side2ImageBtnListener = new OnClickListener() {
             public void onClick(View v) {
-                // TODO(jwall): we need to start an activity to get an image.
-                mainContext.startActivityForResult(
-                    new Intent(MediaStore.ACTION_IMAGE_CAPTURE),
+                // TODO(jwall): we need to start an activity to capture an image.
+            	Intent imgIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            	imgIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileNamePrefix + "side1");
+                mainContext.startActivityForResult(imgIntent,
                     REQUEST_SIDE2_IMAGE_RESULT);
             }
         };
@@ -128,7 +131,7 @@ public class NewCardCreatorActivity extends Activity {
         side2TextBtn.setOnClickListener(side2TextBtnListener);
 
         titleTextBox =
-            (TextView) findViewById(R.id.NewCardTitleEditable);
+            (EditText) findViewById(R.id.NewCardTitleEditable);
 
         OnEditorActionListener titleTextBoxEditListener =
             new OnEditorActionListener() {
@@ -163,6 +166,7 @@ public class NewCardCreatorActivity extends Activity {
         switch(requestCode) {
             // TODO(jwall): the following is now testable so go write some :-)
             case REQUEST_SIDE1_IMAGE_RESULT:
+            	// TODO(jwall): Verify the correct way to get the camera image.
                 img1 = (Bitmap) data.getExtras().getParcelable("data");
                 side1Type = Card.IMAGE_TYPE;
                 L.d("NewCardCreatorActivity onActivityResult",
@@ -184,6 +188,22 @@ public class NewCardCreatorActivity extends Activity {
                 L.d("NewCardCreatorActivity onActivityResult",
                     "Recieved text result for side 2 %s", txt2);
                 break;
+        }
+        if (side1Type == Card.IMAGE_TYPE && side2Type == Card.TEXT_TYPE) {
+        	Card<Bitmap, String> card = new Card<Bitmap, String>("foo", img1, txt2);
+            db.upsertCard(card);
+        }
+        if (side1Type == Card.TEXT_TYPE && side2Type == Card.TEXT_TYPE) {
+        	Card<String, Bitmap> card = new Card<String, Bitmap>("foo", txt1, img2);
+            db.upsertCard(card);
+        }
+        if (side1Type == Card.IMAGE_TYPE && side2Type == Card.IMAGE_TYPE) {
+        	Card<Bitmap, Bitmap> card = new Card<Bitmap, Bitmap>("foo", img1, img2);
+            db.upsertCard(card);
+        }
+        if (side1Type == Card.TEXT_TYPE && side2Type == Card.TEXT_TYPE) {
+        	Card<String, String> card = new Card<String, String>("foo", txt1, txt2);
+            db.upsertCard(card);
         }
     }
 }
