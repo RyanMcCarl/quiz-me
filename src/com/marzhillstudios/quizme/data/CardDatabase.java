@@ -47,9 +47,9 @@ public class CardDatabase extends SQLiteOpenHelper {
     public static ContentValues contentValuesFromCard(Card card) {
     	ContentValues values = new ContentValues();
 		values.put("title", card.getId());
-		values.put("side1Type", card.side1Type);
+		values.put("side1Type", card.getSide1Type());
 		values.put("side1", card.side1);
-		values.put("side2Type", card.side2Type);
+		values.put("side2Type", card.getSide2Type());
 		values.put("side2", card.side2);
 		values.put("ef", card.getEFactor());
 		values.put("count", card.getCount());
@@ -123,8 +123,8 @@ public class CardDatabase extends SQLiteOpenHelper {
    			card.setCount(count);
    			card.setInterval(interval);
    			card.setLastTime(last);
-   			card.side1Type = side1Type;
-   			card.side2Type = side2Type;
+   			card.setSide1Type(side1Type);
+   			card.setSide2Type(side2Type);
     		return card;
     	}
         return null;

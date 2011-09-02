@@ -89,4 +89,20 @@ public class Card {
     public Long getLastTimeMillis() {
     	return lastTime.getTime();
     }
+
+	public int getSide1Type() {
+		return side1Type;
+	}
+
+	public void setSide1Type(int side1Type) {
+		this.side1Type = side1Type;
+	}
+
+	public int getSide2Type() {
+		return side2Type;
+	}
+
+	public void setSide2Type(int side2Type) {
+		this.side2Type = side2Type;
+	}
 }
