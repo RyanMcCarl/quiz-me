@@ -22,6 +22,7 @@ import java.lang.Math;
 
 public class SM2 {
 
+  // TODO(jwall): Make these configurable in an advanced settings pane?
   public static final int MAX_QUALITY = 5;
   public static final int QUALITY_SUBTRACTOR = 5;
   public static final float E_FACTOR_FLOOR = 1.3f;

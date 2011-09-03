@@ -182,7 +182,7 @@ public class NewCardCreatorActivity extends Activity {
     @Override
     public void onPause() {
     	super.onPause();
-    	L.i("onPause", "Before: Cards id set to: %d", card.getId());
+    	L.d("onPause", "Before: Cards id set to: %d", card.getId());
     	card.setTitle(titleTextBox.getText().toString());
     	Long id = this.db.upsertCard(card);
     	card.setId(id);

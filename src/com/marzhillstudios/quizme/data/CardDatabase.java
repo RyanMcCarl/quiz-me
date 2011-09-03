@@ -56,7 +56,7 @@ public class CardDatabase extends SQLiteOpenHelper {
 		values.put("ef", card.getEFactor());
 		values.put("count", card.getCount());
 		values.put("interval", card.getInterval());
-		values.put("last", card.getLastTimeMillis());
+		values.put("last", (Long)(card.getLastTimeMillis() / 1000));
 		return values;
     }
     public CardDatabase(Context context) {
@@ -98,6 +98,11 @@ public class CardDatabase extends SQLiteOpenHelper {
             null, null, null);
     }
 
+    public Cursor getCardsForQuiz() {
+    	// select all cards for which the last(timestamp) + interval (days) < today
+    	return null;
+    }
+    
     // TODO(jwall): Actually do the Database operations below
     /**
      * Get a card from the database.
