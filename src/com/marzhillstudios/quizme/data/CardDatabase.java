@@ -6,6 +6,9 @@
 
 package com.marzhillstudios.quizme.data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.marzhillstudios.quizme.util.L;
 
 import android.content.ContentValues;
@@ -122,28 +125,42 @@ public class CardDatabase extends SQLiteOpenHelper {
     			selectionArgs, null, null, null);
     	if (cur.getCount() == 1) {
     		cur.moveToFirst();
-    		Long ident = cur.getLong(0);
-    		String title = cur.getString(1);
-    		Integer side1Type = cur.getInt(2);
-    		Integer side2Type = cur.getInt(4);
-    		Float ef = cur.getFloat(6);
-    		Integer count = cur.getInt(7);
-    		Integer interval = cur.getInt(8);
-    		Long last = cur.getLong(9);
-    		String side1 = cur.getString(3);
-    		String side2 = cur.getString(5);
-    		Card card = new Card(ident, title, side1, side2, ef);
-   			card.setCount(count);
-   			card.setInterval(interval);
-   			card.setLastTime(last);
-   			card.setSide1Type(side1Type);
-   			card.setSide2Type(side2Type);
-    		return card;
+    		return cursorRowToCard(cur);
     	}
         return null;
     }
     
+    public Card cursorRowToCard(Cursor cur) {
+    	Long ident = cur.getLong(0);
+		String title = cur.getString(1);
+		Integer side1Type = cur.getInt(2);
+		Integer side2Type = cur.getInt(4);
+		Float ef = cur.getFloat(6);
+		Integer count = cur.getInt(7);
+		Integer interval = cur.getInt(8);
+		Long last = cur.getLong(9);
+		String side1 = cur.getString(3);
+		String side2 = cur.getString(5);
+		Card card = new Card(ident, title, side1, side2, ef);
+		card.setCount(count);
+		card.setInterval(interval);
+		card.setLastTime(last);
+		card.setSide1Type(side1Type);
+		card.setSide2Type(side2Type);
+		return card;
+    }
     
+    public List<Card> cursorToCards(Cursor cur) {
+    	if (cur.getCount() > 0) {
+    		List<Card> cards = new ArrayList<Card>();
+    		while (cur.moveToNext()) {
+    			cards.add(cursorRowToCard(cur));
+    		}
+    		return cards;
+    	} else {
+    		return null;
+    	}
+    }
     /**
      * Update/Insert a card in the database.
      *
