@@ -8,6 +8,8 @@ package com.marzhillstudios.quizme.data;
 
 import java.util.Date;
 
+import com.marzhillstudios.quizme.algorithm.SM2;
+
 /**
  * Describe a flash card.
  *
@@ -53,7 +55,8 @@ public class Card {
       this.title = title;
       this.side1 = side1;
       this.side2 = side2;
-      this.eFactor = 0;
+      this.eFactor = SM2.E_FACTOR_FLOOR;
+      SM2.calculateInterval(this);
     }
 
     public void setTitle(String title) {
