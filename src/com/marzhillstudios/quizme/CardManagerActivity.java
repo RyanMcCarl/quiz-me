@@ -16,6 +16,7 @@ import android.widget.ListView;
 
 import com.marzhillstudios.quizme.adapter.CardListAdapter;
 import com.marzhillstudios.quizme.data.CardDatabase;
+import com.marzhillstudios.quizme.util.L;
 
 /**
  * 
@@ -52,6 +53,14 @@ public class CardManagerActivity extends Activity {
         newCardBtn.setOnClickListener(newCardListener);
     }
 
+    @Override
+    public void onStart() {
+    	// repaint the list
+    	listAdapter.reset(db.getAllCards());
+    	L.d("onStart", "Resetting list view to list of count %d", listAdapter.getCount());
+    	super.onStart();
+    }
+    
     public CardListAdapter getListAdapter() {
         return listAdapter;
     }

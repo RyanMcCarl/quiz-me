@@ -10,18 +10,15 @@ import java.io.File;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
-
 import com.marzhillstudios.quizme.data.Card;
 import com.marzhillstudios.quizme.data.CardDatabase;
 import com.marzhillstudios.quizme.util.L;
@@ -44,23 +41,18 @@ public class NewCardCreatorActivity extends Activity {
     public static final int REQUEST_SIDE2_IMAGE_RESULT = 3;
     public static final int REQUEST_SIDE2_TEXT_RESULT = 4;
 
+    public static final String CARD_INTENT_KEY = "card_for_update";
+    
     private Button side1ImageBtn;
     private Button side1TextBtn;
     private Button side2ImageBtn;
     private Button side2TextBtn;
     private EditText titleTextBox;
 
-    private int side1Type;
-    private int side2Type;
-    
-    private String side1;
-    private String side2;
-    
+    private Card card;
     private String fileNamePrefix;
-
-	protected Uri imageUriSide2;
-
-	protected Uri imageUriSide1;
+	private Uri imageUriSide2;
+	private Uri imageUriSide1;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,14 +60,34 @@ public class NewCardCreatorActivity extends Activity {
         setContentView(R.layout.new_card_dialog);
         db = new CardDatabase(this);
         final Activity mainContext = this;
-        
+        Intent intention = getIntent();
+        titleTextBox =
+                (EditText) findViewById(R.id.NewCardTitleEditable);
         side1ImageBtn =
-            (Button) findViewById(R.id.NewCardSide1ImageBtn);
-
+                (Button) findViewById(R.id.NewCardSide1ImageBtn);
+        side1TextBtn =
+                (Button) mainContext.findViewById(R.id.NewCardSide1TextBtn);
+        side2ImageBtn =
+                (Button) mainContext.findViewById(R.id.NewCardSide2ImageBtn);
+        side2TextBtn =
+                (Button) mainContext.findViewById(R.id.NewCardSide2TextBtn);
+        
+        if (intention.hasExtra(CARD_INTENT_KEY)) {
+        	// we are editing a card
+        	card = db.getCard(intention.getExtras().getLong(CARD_INTENT_KEY));
+        } else {
+        	// new card
+        	Resources res = getResources();
+        	card = new Card(res.getString(R.string.NewCardDialogTitleDefault),
+        			res.getString(R.string.Side1Text), res.getString(R.string.Side2Text));
+        }
+        
+        titleTextBox.setText(card.getTitle());
+        
+        // TODO(jwall): handle the update case.
         OnClickListener side1ImageBtnListener = new OnClickListener() {
             public void onClick(View v) {
-                // TODO(jwall): we need to start an activity to capture an image.
-            	Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             	File photo = new File(Environment.getExternalStorageDirectory(),  fileNamePrefix + "side1.png");
                 intent.putExtra(MediaStore.EXTRA_OUTPUT,
                         Uri.fromFile(photo));
@@ -87,12 +99,8 @@ public class NewCardCreatorActivity extends Activity {
 
         side1ImageBtn.setOnClickListener(side1ImageBtnListener);
 
-        side1TextBtn =
-            (Button) mainContext.findViewById(R.id.NewCardSide1TextBtn);
-
         OnClickListener side1TextBtnListener = new OnClickListener() {
             public void onClick(View v) {
-                // TODO(jwall): we need to start an activity to write text.
                 Intent intent = new Intent(mainContext, TextCardEditActivity.class);
                 intent.putExtra(TextCardEditActivity.EXTRA_KEY, "Side 1");
                 intent.setType("text/plain");
@@ -105,13 +113,9 @@ public class NewCardCreatorActivity extends Activity {
 
         side1TextBtn.setOnClickListener(side1TextBtnListener);
 
-        side2ImageBtn =
-            (Button) mainContext.findViewById(R.id.NewCardSide2ImageBtn);
-
         OnClickListener side2ImageBtnListener = new OnClickListener() {
             public void onClick(View v) {
-                // TODO(jwall): we need to start an activity to capture an image.
-            	Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             	File photo = new File(Environment.getExternalStorageDirectory(),  fileNamePrefix + "side2.png");
                 intent.putExtra(MediaStore.EXTRA_OUTPUT,
                         Uri.fromFile(photo));
@@ -123,13 +127,9 @@ public class NewCardCreatorActivity extends Activity {
 
         side2ImageBtn.setOnClickListener(side2ImageBtnListener);
 
-        side2TextBtn =
-            (Button) mainContext.findViewById(R.id.NewCardSide2TextBtn);
-
         OnClickListener side2TextBtnListener = new OnClickListener() {
             public void onClick(View v) {
-                // TODO(jwall): we need to start an activity to write text.
-            	Intent intent = new Intent(mainContext, TextCardEditActivity.class);
+                Intent intent = new Intent(mainContext, TextCardEditActivity.class);
                 intent.putExtra(TextCardEditActivity.EXTRA_KEY, "Side 2");
                 intent.setType("text/plain");
                 L.d("NewCardCreatorAtvivtyService side2TextBtnListener",
@@ -140,83 +140,51 @@ public class NewCardCreatorActivity extends Activity {
         };
 
         side2TextBtn.setOnClickListener(side2TextBtnListener);
-
-        titleTextBox =
-            (EditText) findViewById(R.id.NewCardTitleEditable);
-
-        OnEditorActionListener titleTextBoxEditListener =
-            new OnEditorActionListener() {
-                public boolean onEditorAction(
-                    TextView v, int action, KeyEvent event) {
-                  // return true if I consume the action. (if event is not null)
-                  if (event != null) {
-                      L.d("NewCardCreatorActivity onEditorAction",
-                          "encountered enter key event");
-                      // TODO(jwall): we need to store this value in our
-                      // activity. and use it to restore this activity in
-                      // the bundle.
-                      return true;
-                  } else {
-                      L.d("NewCardCreatorActivity onEditorAction",
-                          "encountered action event %d", action);
-                      return false;
-                  }
-                }
-            };
-
-        titleTextBox.setOnEditorActionListener(titleTextBoxEditListener);
     }
 
     public CardDatabase getDb() { return db; }
     
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // TODO(jwall): dispatch for the various request codes and result codes
         L.d("NewCardCreatorActivity onActivityResult",
             "Recieved result from an activity resultCode: %d, requestCode %d",
             resultCode, requestCode);
         switch(requestCode) {
             // TODO(jwall): the following is now testable so go write some :-)
             case REQUEST_SIDE1_IMAGE_RESULT:
-            	// TODO side1 = (Bitmap) data.getExtras().getParcelable("data");
-                setSide1Type(Card.IMAGE_TYPE);
-                side1 = imageUriSide1.toString();
+            	card.setSide1Type(Card.IMAGE_TYPE);
+                card.side1 = imageUriSide1.toString();
                 L.d("NewCardCreatorActivity onActivityResult",
-                    "Recieved image result for side 1 image: %s", side1);
+                    "Recieved image result for side 1 image: %s", card.side1);
                 break;
             case REQUEST_SIDE2_IMAGE_RESULT:
-                setSide2Type(Card.IMAGE_TYPE);
-                side2 = imageUriSide2.toString();
+                card.setSide2Type(Card.IMAGE_TYPE);
+                card.side2 = imageUriSide2.toString();
                 L.d("NewCardCreatorActivity onActivityResult",
-                    "Recieved image result for side 2 %s", side2);
+                    "Recieved image result for side 2 %s", card.side2);
                 break;
             case REQUEST_SIDE1_TEXT_RESULT:
-            	setSide1Type(Card.TEXT_TYPE);
-            	side1 = data.getExtras().getString(TextCardEditActivity.EXTRA_KEY);
+            	card.setSide1Type(Card.TEXT_TYPE);
+            	card.side1 = data.getExtras().getString(TextCardEditActivity.EXTRA_KEY);
                 L.d("NewCardCreatorActivity onActivityResult",
-                    "Recieved text result for side 1 %s", side1);
+                    "Recieved text result for side 1 %s", card.side1);
                 break;
             case REQUEST_SIDE2_TEXT_RESULT:
-            	setSide2Type(Card.TEXT_TYPE);
-            	side2 = data.getExtras().getString(TextCardEditActivity.EXTRA_KEY);
+            	card.setSide2Type(Card.TEXT_TYPE);
+            	card.side2 = data.getExtras().getString(TextCardEditActivity.EXTRA_KEY);
                 L.d("NewCardCreatorActivity onActivityResult",
-                    "Recieved text result for side 2 %s", side2);
+                    "Recieved text result for side 2 %s", card.side2);
                 break;
         }
     }
 
-	public int getSide1Type() {
-		return side1Type;
-	}
-
-	public void setSide1Type(int side1Type) {
-		this.side1Type = side1Type;
-	}
-
-	public int getSide2Type() {
-		return side2Type;
-	}
-
-	public void setSide2Type(int side2Type) {
-		this.side2Type = side2Type;
-	}
+    @Override
+    public void onPause() {
+    	super.onPause();
+    	L.i("onPause", "Before: Cards id set to: %d", card.getId());
+    	card.setTitle(titleTextBox.getText().toString());
+    	Long id = this.db.upsertCard(card);
+    	card.setId(id);
+    	L.i("onPause", "returned id after upsert %d", card.getId());
+    	L.i("onPause", "After: Cards id set to: %d", card.getId());
+    }
 }

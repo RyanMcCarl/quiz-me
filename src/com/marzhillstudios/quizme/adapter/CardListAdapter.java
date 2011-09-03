@@ -26,16 +26,16 @@ import com.marzhillstudios.quizme.data.CardDatabase;
 // TODO(jwall): UnitTests for this.
 public class CardListAdapter extends BaseAdapter {
 
-    private Cursor cursor;
+	private Cursor cursor;
     private Context context;
     private static final int ID_COLUMN = CardDatabase.CARD_ID_COLUMN;
     private static final int TITLE_COLUMN = CardDatabase.CARD_TITLE_COLUMN;
 
     public CardListAdapter(Context context, CardDatabase db) {
-        this(context, db.getAllCards());
+    	this(context, db.getAllCards());
     }
 
-    public CardListAdapter(Context context, Cursor cursor) {
+    private CardListAdapter(Context context, Cursor cursor) {
         this.context = context;
         this.cursor = cursor;
     }
@@ -96,5 +96,10 @@ public class CardListAdapter extends BaseAdapter {
            cv = new CardView(context, id, title);
        }
        return cv;
+    }
+    
+    public void reset(Cursor cursor) {
+    	this.cursor = cursor;
+    	this.notifyDataSetChanged();
     }
 }

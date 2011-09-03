@@ -20,7 +20,7 @@ public class Card {
     public static final int TEXT_TYPE = 1;
 
     // identifier in the database
-    public int id;
+    public Long id;
     // the cards title
     public String title;
     
@@ -34,8 +34,13 @@ public class Card {
     public Date lastTime;
     public int interval;
     
+    public Card() {
+    	lastTime = new Date();
+    }
+    
     public Card(
-        int id, String title, String side1, String side2, float eFactor) {
+        Long id, String title, String side1, String side2, float eFactor) {
+      this();
       this.id = id;
       this.title = title;
       this.side1 = side1;
@@ -44,16 +49,29 @@ public class Card {
     }
 
     public Card(String title, String side1, String side2) {
+      this();
       this.title = title;
       this.side1 = side1;
       this.side2 = side2;
       this.eFactor = 0;
     }
 
-    public int getId() {
+    public void setTitle(String title) {
+    	this.title = title;
+    }
+    
+    public String getTitle() {
+    	return this.title;
+    }
+    
+    public Long getId() {
         return id;
     }
 
+    public void setId(Long id) {
+    	this.id = id;
+    }
+    
     public float getEFactor() {
         return eFactor;
     }

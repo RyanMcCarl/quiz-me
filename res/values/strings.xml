@@ -19,4 +19,6 @@
   <string name="SaveTextCardButton">Save Card Text</string>
   <string name="TextCardEditorName">quizme text card editor</string>
   <string name="TextCardEditorDescription">Text Card Editor for QuizMe</string>
+  <string name="Side1Text">Side 1</string>
+  <string name="Side2Text">Side 2</string>
 </resources>

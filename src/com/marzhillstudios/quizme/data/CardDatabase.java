@@ -6,6 +6,8 @@
 
 package com.marzhillstudios.quizme.data;
 
+import com.marzhillstudios.quizme.util.L;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -46,7 +48,7 @@ public class CardDatabase extends SQLiteOpenHelper {
     
     public static ContentValues contentValuesFromCard(Card card) {
     	ContentValues values = new ContentValues();
-		values.put("title", card.getId());
+		values.put("title", card.getTitle());
 		values.put("side1Type", card.getSide1Type());
 		values.put("side1", card.side1);
 		values.put("side2Type", card.getSide2Type());
@@ -100,16 +102,16 @@ public class CardDatabase extends SQLiteOpenHelper {
     /**
      * Get a card from the database.
      *
-     * @param id The primary key for the card in the database.
+     * @param long1 The primary key for the card in the database.
      * @returns card.
      */
-    public Card getCard(Integer id) {
+    public Card getCard(Long id) {
     	SQLiteDatabase db = getReadableDatabase();
     	String[] selectionArgs  = { id.toString() };
     	Cursor cur = db.query(CARDS_TABLE_NAME, CARDS_TABLE_COLUMNS_ARRAY, "id = ?",
     			selectionArgs, null, null, null);
-    	if (cur.getColumnCount() == 1) {
-    		Integer ident = cur.getInt(0);
+    	if (cur.getCount() == 1) {
+    		Long ident = cur.getLong(0);
     		String title = cur.getString(1);
     		Integer side1Type = cur.getInt(2);
     		Integer side2Type = cur.getInt(4);
@@ -137,19 +139,23 @@ public class CardDatabase extends SQLiteOpenHelper {
      * @param card a Card<S1, S2>.
      * @returns a Card<S1, S2>.
      */
-    public Card upsertCard(Card card) {
+    public Long upsertCard(Card card) {
     	SQLiteDatabase db = getWritableDatabase();
     	ContentValues values = contentValuesFromCard(card);
-    	Card c1 = getCard(card.getId());
-    	if (c1 == null) {
+    	if (card.getId() == null) {
+    		L.i("upsertCard", "Inserting card %s", card.getTitle());
     		// an insert then
-    		db.insertOrThrow(CARDS_TABLE_NAME, null, values);
+    		Long id = db.insertOrThrow(CARDS_TABLE_NAME, null, values);
+    		card.setId(id);
+    		L.i("upsertCard", "Cards id %d", card.getId());
+    		return id;
     	} else {
+    		L.i("upsertCard", "Updating card %d", card.getId());
     		// an update
-    		String[] whereArgs = { new Integer(card.getId()).toString() };
+    		String[] whereArgs = { card.getId().toString() };
         	db.update(CARDS_TABLE_NAME, values, "id = ?", whereArgs);
+        	return card.getId();
     	}
-    	return card;
     }
     
     
@@ -163,7 +169,7 @@ public class CardDatabase extends SQLiteOpenHelper {
      *
      * @param id The integer primary key for the key in the database.
      */
-    public void deleteCard(Integer id) {
+    public void deleteCard(Long id) {
     	SQLiteDatabase db = getWritableDatabase();
     	String[] whereArgs = { id.toString() };
     	db.delete(CARDS_TABLE_NAME, "id = ?", whereArgs);
