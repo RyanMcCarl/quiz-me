@@ -111,6 +111,7 @@ public class CardDatabase extends SQLiteOpenHelper {
     	Cursor cur = db.query(CARDS_TABLE_NAME, CARDS_TABLE_COLUMNS_ARRAY, "id = ?",
     			selectionArgs, null, null, null);
     	if (cur.getCount() == 1) {
+    		cur.moveToFirst();
     		Long ident = cur.getLong(0);
     		String title = cur.getString(1);
     		Integer side1Type = cur.getInt(2);

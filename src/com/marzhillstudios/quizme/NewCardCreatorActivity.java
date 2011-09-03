@@ -74,6 +74,8 @@ public class NewCardCreatorActivity extends Activity {
         
         if (intention.hasExtra(CARD_INTENT_KEY)) {
         	// we are editing a card
+        	Long id = intention.getExtras().getLong(CARD_INTENT_KEY);
+        	L.d("NewCardCreatorActivity onCreate", "Retrieving Card with id %d", id);
         	card = db.getCard(intention.getExtras().getLong(CARD_INTENT_KEY));
         } else {
         	// new card

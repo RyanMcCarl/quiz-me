@@ -7,6 +7,7 @@
 package com.marzhillstudios.quizme.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
@@ -14,7 +15,9 @@ import android.widget.TextView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.marzhillstudios.quizme.NewCardCreatorActivity;
 import com.marzhillstudios.quizme.data.CardDatabase;
+import com.marzhillstudios.quizme.util.L;
 
 /**
  * An adapter to the Card Database for ListViews.
@@ -45,14 +48,27 @@ public class CardListAdapter extends BaseAdapter {
       @SuppressWarnings("unused")
       private String title;
       @SuppressWarnings("unused")
-      private int id;
+      private Long id;
       private TextView listItem;
       
-      public CardView(Context context, int id, String title) {
+      public CardView(final Context context, final Long id, String title) {
         super(context);
         this.title = title;
         this.id = id;
         listItem = new TextView(context);
+        
+        // TextViews need to respond to the onClick event
+        OnClickListener updateCardListener = new OnClickListener() {
+            public void onClick(View v) {
+            	L.d("onClick", "Opening card editor for card id: %d", id);
+            	Intent intent = new Intent(context, NewCardCreatorActivity.class);
+            	intent.putExtra(NewCardCreatorActivity.CARD_INTENT_KEY, id);
+                context.startActivity(
+                    intent);
+            }
+        };
+        
+        listItem.setOnClickListener(updateCardListener);
         setTitle(title);
         addView(listItem,
                 new LinearLayout.LayoutParams(
@@ -64,7 +80,7 @@ public class CardListAdapter extends BaseAdapter {
         listItem.setText(title);
       }
 
-      public void setId(int id) {
+      public void setId(Long id) {
           this.id = id;
       }
     }
@@ -86,7 +102,7 @@ public class CardListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
        cursor.moveToPosition(position);
        String title = cursor.getString(TITLE_COLUMN);
-       int id = cursor.getInt(ID_COLUMN);
+       Long id = cursor.getLong(ID_COLUMN);
        CardView cv;
        if (convertView != null) {
            cv = (CardView)convertView;
