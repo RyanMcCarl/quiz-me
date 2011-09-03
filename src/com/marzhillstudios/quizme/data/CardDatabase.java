@@ -46,6 +46,10 @@ public class CardDatabase extends SQLiteOpenHelper {
     private static final String CARDS_TITLE_INDEX_COLUMN =
         CARDS_TABLE_COLUMNS_ARRAY[CARD_TITLE_COLUMN];
     
+    private static final String cardsForQuizQry = "select * from card_table where " +
+    		"datetime(last, 'unixepoch', '+' || interval || ' days') > datetime('now')" +
+    		"order by random()";
+    
     public static ContentValues contentValuesFromCard(Card card) {
     	ContentValues values = new ContentValues();
 		values.put("title", card.getTitle());
@@ -100,7 +104,8 @@ public class CardDatabase extends SQLiteOpenHelper {
 
     public Cursor getCardsForQuiz() {
     	// select all cards for which the last(timestamp) + interval (days) < today
-    	return null;
+    	SQLiteDatabase db = getReadableDatabase();
+        return db.rawQuery(cardsForQuizQry, null);
     }
     
     // TODO(jwall): Actually do the Database operations below
