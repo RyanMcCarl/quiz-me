@@ -8,6 +8,8 @@ package com.marzhillstudios.quizme.data;
 
 import java.util.Date;
 
+import android.net.Uri;
+
 import com.marzhillstudios.quizme.algorithm.SM2;
 
 /**
@@ -125,5 +127,21 @@ public class Card {
 
 	public void setSide2Type(int side2Type) {
 		this.side2Type = side2Type;
+	}
+	
+	public Uri getSide1URI() {
+		return Uri.parse(this.side1);
+	}
+	
+	public Uri getSide2URI() {
+		return Uri.parse(this.side2);
+	}
+	
+	public String getSide1Text() {
+		return this.side1;
+	}
+	
+	public String getSide2Text() {
+		return this.side2;
 	}
 }
