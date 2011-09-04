@@ -46,16 +46,20 @@ public class QuizActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
     	Resources res = getResources();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.quiz);
-        quizView = (LinearLayout) findViewById(R.layout.quiz);
-        cardView = (LinearLayout) findViewById(R.layout.card_view);
+        quizView = (LinearLayout) getLayoutInflater().inflate(R.layout.quiz, null);
+        cardView = (LinearLayout) getLayoutInflater().inflate(R.layout.card_view, null);
+        setContentView(quizView);
         db = new CardDatabase(this);
         // TODO(jwall): onCreate or onStart?
         final List<Card> cards = db.cursorToCards(db.getCardsForQuiz());
         setCards(cards);
+        
         startBtn = new Button(this);
+        startBtn.setText(res.getString(R.string.StartQuizButtonText));
         stopBtn = new Button(this);
+        stopBtn.setText(res.getString(R.string.StopQuizButtonText));
         seeAnswerBtn = new Button(this);
+        seeAnswerBtn.setText(res.getString(R.string.SeeAnswerButtonText));
         textSideViewer = new TextView(this);
         imgSideViewer = new ImageView(this);
         
@@ -65,8 +69,7 @@ public class QuizActivity extends Activity {
         
         OnClickListener startClickListener = new OnClickListener() {
         	public void onClick(View v) {
-				// TODO Auto-generated method stub
-        		Card currentCard = cards.get(currentIndex);
+				Card currentCard = cards.get(currentIndex);
 				// We need to show a card View
 				showStopButton();
 				quizView.addView(cardView, 1);
@@ -74,10 +77,11 @@ public class QuizActivity extends Activity {
 				if (currentCard.getSide1Type() == Card.TEXT_TYPE) {
 					// we show a textSideViewer
 					textSideViewer.setText(currentCard.getSide1Text());
-					quizView.addView(textSideViewer);
+					cardView.addView(textSideViewer);
 				} else {
 					// we show an imageSideViewer
 					imgSideViewer.setImageURI(currentCard.getSide1URI());
+					cardView.addView(imgSideViewer);
 				}
 				// and a see answer button.
 				cardView.addView(seeAnswerBtn, 1);
@@ -97,8 +101,9 @@ public class QuizActivity extends Activity {
 			}
         };
         stopBtn.setOnClickListener(stopClickListener);
+        
         //cv.removeView(stopBtn);
-        // after all cards we get cards again.
+        // after all cards we get next set of cards again.
         // repeat until user quits or we return no more cards.
     }
 
