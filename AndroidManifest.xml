@@ -32,6 +32,7 @@
                 <action android:name="android.intent.action.EDIT"></action>
             </intent-filter>
         </activity>
+        <activity android:name="RateCardActivity"></activity>
       </application>
 
 

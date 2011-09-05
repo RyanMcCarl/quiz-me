@@ -30,7 +30,7 @@ import android.widget.TextView;
  */
 public class QuizActivity extends Activity {
     
-    private CardDatabase db;
+	private CardDatabase db;
     private List<Card> cards;
     
     private LinearLayout quizView;
@@ -107,10 +107,15 @@ public class QuizActivity extends Activity {
 			}
         };
         
-        // TODO(jwall): on see answer button card view launches a rate activity
+        OnClickListener seeAnswerListener = new OnClickListener() {
+        	public void onClick(View v) {
+        		// TODO(jwall): Launch a rate activity for result
+        	}
+        };
+        
         startBtn.setOnClickListener(startClickListener);
         stopBtn.setOnClickListener(stopClickListener);
-        
+        seeAnswerBtn.setOnClickListener(seeAnswerListener);
         
         // after all cards we get next set of cards again.
         // repeat until user quits or we return no more cards.

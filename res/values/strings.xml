@@ -24,4 +24,5 @@
   <string name="StartQuizButtonText">Start</string>
   <string name="StopQuizButtonText">Stop</string>
   <string name="SeeAnswerButtonText"> Answer</string>
+  <string name="DoneRatingButton">Done</string>
 </resources>

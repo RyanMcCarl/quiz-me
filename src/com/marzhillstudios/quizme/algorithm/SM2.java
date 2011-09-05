@@ -52,4 +52,9 @@ public class SM2 {
       }
       card.setInterval(interval);
   }
+  
+  public static void scoreCardAndCalculateInterval(Card card, int quality) {
+	  scoreCard(card, quality);
+	  calculateInterval(card);
+  }
 }
