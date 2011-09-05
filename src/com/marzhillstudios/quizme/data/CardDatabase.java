@@ -50,7 +50,7 @@ public class CardDatabase extends SQLiteOpenHelper {
         CARDS_TABLE_COLUMNS_ARRAY[CARD_TITLE_COLUMN];
     
     private static final String cardsForQuizQry = "select * from card_table where " +
-    		"datetime(last, 'unixepoch', '+' || interval || ' days') > datetime('now')" +
+    		"date(last, 'unixepoch', '+' || interval || ' days') > date('now')" +
     		"order by random()";
     
     public static ContentValues contentValuesFromCard(Card card) {

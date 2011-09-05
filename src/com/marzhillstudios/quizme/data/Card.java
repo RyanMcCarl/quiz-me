@@ -20,8 +20,8 @@ import com.marzhillstudios.quizme.algorithm.SM2;
  */
 public class Card {
 
-    public static final int IMAGE_TYPE = 0;
-    public static final int TEXT_TYPE = 1;
+    public static final int TEXT_TYPE = 0;
+    public static final int IMAGE_TYPE = 1;
 
     // identifier in the database
     public Long id;

@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.marzhillstudios.quizme.data.Card;
 import com.marzhillstudios.quizme.data.CardDatabase;
+import com.marzhillstudios.quizme.util.L;
 
 import android.app.Activity;
 import android.content.res.Resources;
@@ -73,12 +74,15 @@ public class QuizActivity extends Activity {
 				// We need to show a card View
 				showStopButton();
 				quizView.addView(cardView, 1);
+				cardView.removeAllViews();
 				// card view shows side 1 first
 				if (currentCard.getSide1Type() == Card.TEXT_TYPE) {
+					L.i("onClick StartButton", "Showing text side for card: %d", currentCard.getId());
 					// we show a textSideViewer
 					textSideViewer.setText(currentCard.getSide1Text());
 					cardView.addView(textSideViewer);
 				} else {
+					L.i("onClick StartButton", "Showing image side for card: %d", currentCard.getId());
 					// we show an imageSideViewer
 					imgSideViewer.setImageURI(currentCard.getSide1URI());
 					cardView.addView(imgSideViewer);
