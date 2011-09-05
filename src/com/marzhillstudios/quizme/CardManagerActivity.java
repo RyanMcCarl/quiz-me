@@ -27,7 +27,8 @@ import com.marzhillstudios.quizme.util.L;
  */
 public class CardManagerActivity extends Activity {
     
-    private CardDatabase db;
+	// TODO(jwall): cleanup the databse on destroy;
+	private CardDatabase db;
     private CardListAdapter listAdapter;
     private ListView listView;
 

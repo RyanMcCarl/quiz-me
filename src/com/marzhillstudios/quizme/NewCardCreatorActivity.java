@@ -34,7 +34,8 @@ import com.marzhillstudios.quizme.util.L;
 // TODO(jwall): perhaps this class can also be reused to edit cards?
 public class NewCardCreatorActivity extends Activity {
 
-    private CardDatabase db;
+	// TODO(jwall): cleanup the databse on destroy;
+	private CardDatabase db;
 
     public static final int REQUEST_SIDE1_IMAGE_RESULT = 1;
     public static final int REQUEST_SIDE1_TEXT_RESULT = 2;

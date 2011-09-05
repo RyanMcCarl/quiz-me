@@ -33,6 +33,7 @@ public class QuizActivity extends Activity {
     
 	protected static final int CARD_RATING_RESULT = 0;
 	
+	// TODO(jwall): cleanup the databse on destroy;
 	private CardDatabase db;
     private List<Card> cards;
     
