@@ -111,7 +111,6 @@ public class CardDatabase extends SQLiteOpenHelper {
         return db.rawQuery(cardsForQuizQry, null);
     }
     
-    // TODO(jwall): Actually do the Database operations below
     /**
      * Get a card from the database.
      *

@@ -54,8 +54,6 @@ public class RateCardActivity extends Activity {
 		TextView cardTitle = (TextView) findViewById(R.id.RateCardTitle);
 		RatingBar rateCard = (RatingBar) findViewById(R.id.RateCardRatingBar);
 		rateCard.setNumStars(5);
-		//rateCard.setMax(5);
-		//rateCard.setRating(3.0f);
 		rateCard.setStepSize(1.0f);
 		Button doneBtn = (Button) findViewById(R.id.DoneRatingButton);
 		textSideViewer = new TextView(this);
@@ -83,15 +81,9 @@ public class RateCardActivity extends Activity {
 			
 			OnClickListener doneListener = new OnClickListener() {
 				public void onClick(View v) {
-					// TODO(jwal): finalize the rating.
-					L.d("onClick doneListener", "Cards count before: %d", card.getCount());
 					card.incrementCount();
-					L.d("onClick doneListener", "Cards count after: %d", card.getCount());
-					L.d("onClick doneListener", "Finalizing rating: %d for Card: %d", rating, card.getId());
-					L.d("onClick doneListener", "Cards ef before: %f", card.getEFactor());
 					SM2.scoreCardAndCalculateInterval(card, rating);
 					L.d("onClick doneListener", "Cards ef after: %f", card.getEFactor());
-					L.d("onClick doneListener", "Cards count after: %d", card.getCount());
 					card.setLastTime(new Date().getTime());
 					db.upsertCard(card);
 					self.setResult(QuizActivity.CARD_RATING_RESULT);
