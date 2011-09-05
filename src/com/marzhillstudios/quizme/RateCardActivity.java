@@ -91,6 +91,7 @@ public class RateCardActivity extends Activity {
 					L.d("onClick doneListener", "Cards ef after: %f", card.getEFactor());
 					L.d("onClick doneListener", "Cards count after: %d", card.getCount());
 					db.upsertCard(card);
+					self.setResult(QuizActivity.CARD_RATING_RESULT);
 					self.finish();
 				}
 			};

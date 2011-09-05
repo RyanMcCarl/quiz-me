@@ -31,6 +31,8 @@ import android.widget.TextView;
  */
 public class QuizActivity extends Activity {
     
+	protected static final int CARD_RATING_RESULT = 0;
+	
 	private CardDatabase db;
     private List<Card> cards;
     
@@ -55,7 +57,6 @@ public class QuizActivity extends Activity {
         cardView = (LinearLayout) getLayoutInflater().inflate(R.layout.card_view, null);
         setContentView(quizView);
         db = new CardDatabase(this);
-        // TODO(jwall): onCreate or onStart?
         final List<Card> cards = db.cursorToCards(db.getCardsForQuiz());
         setCards(cards);
         
@@ -73,41 +74,24 @@ public class QuizActivity extends Activity {
         stopBtn.setText(res.getString(R.string.StopQuizButtonText));
         quizView.addView(startBtn, 0);
         
-        // TODO(jwall): handle the no cards case
         OnClickListener startClickListener = new OnClickListener() {
         	public void onClick(View v) {
-				Card currentCard = cards.get(currentIndex);
-				// We need to show a card View
-				showStopButton();
-				quizView.addView(cardView, 1);
-				cardView.removeAllViews();
-				cardView.addView(cardTitleViewer);
-				cardTitleViewer.setText(currentCard.getTitle());
-				// card view shows side 1 first
-				if (currentCard.getSide1Type() == Card.TEXT_TYPE) {
-					L.d("onClick StartButton", "Showing text side for card: %d", currentCard.getId());
-					// we show a textSideViewer
-					textSideViewer.setText(currentCard.getSide1Text());
-					cardView.addView(textSideViewer);
-				} else {
-					L.d("onClick StartButton", "Showing image side for card: %d", currentCard.getId());
-					// we show an imageSideViewer
-					imgSideViewer.setImageURI(currentCard.getSide1URI());
-					cardView.addView(imgSideViewer);
-				}
-				// and a see answer button.
-				cardView.addView(seeAnswerBtn);
-		        
-		        // after rate activity returns we change card view for next card.
+        		if (cards != null) {
+        			Card currentCard = cards.get(currentIndex);
+    				showStopButton();
+    				quizView.addView(cardView, 1);
+    				cardView.removeAllViews();
+    				showCard(currentCard);
+        		} else {
+        			handleNoCards();
+        		}
 			}
         };
         
         OnClickListener stopClickListener = new OnClickListener() {
         	public void onClick(View v) {
-				// TODO Auto-generated method stub
 				showStartButton();
 				quizView.removeView(cardView);
-				// start our cleanup here.
 			}
         };
         
@@ -116,7 +100,7 @@ public class QuizActivity extends Activity {
         		Card currentCard = cards.get(currentIndex);
         		Intent intent = new Intent(self, RateCardActivity.class);
         		intent.putExtra(RateCardActivity.CARD_RATING_INTENT_ID_KEY, currentCard.getId());
-        		self.startActivity(intent);
+        		self.startActivityForResult(intent, CARD_RATING_RESULT);
         	}
         };
         
@@ -124,9 +108,27 @@ public class QuizActivity extends Activity {
         stopBtn.setOnClickListener(stopClickListener);
         seeAnswerBtn.setOnClickListener(seeAnswerListener);
         
-        // after all cards we get next set of cards again.
-        // repeat until user quits or we return no more cards.
     }
+    
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	// after rate activity returns we change card view for next card.
+    	if (requestCode == CARD_RATING_RESULT) {
+    		currentIndex++;
+    		if (currentIndex < cards.size()) {
+    			showCard(cards.get(currentIndex));
+    		} else {
+    			// after all cards we get next set of cards again.
+    			cards = db.cursorToCards(db.getCardsForQuiz());
+    			if (cards != null) {
+    				currentIndex = 0;
+    				showCard(cards.get(currentIndex));
+    			} else {
+    				handleNoCards();
+    			}
+    		}
+    	}
+    }
+    
 
     private void showStopButton() {
     	quizView.removeView(startBtn);
@@ -138,11 +140,36 @@ public class QuizActivity extends Activity {
         quizView.addView(startBtn, 0);
     }
     
+    public void handleNoCards() {
+    	// TODO(jwall): handle the no more cards case
+    }
+    
 	public List<Card> getCards() {
 		return cards;
 	}
+	
 
 	public void setCards(List<Card> cards) {
 		this.cards = cards;
+	}
+
+	
+	private void showCard(Card currentCard) {
+		cardView.addView(cardTitleViewer);
+		cardTitleViewer.setText(currentCard.getTitle());
+		// card view shows side 1 first
+		if (currentCard.getSide1Type() == Card.TEXT_TYPE) {
+			L.d("onClick StartButton", "Showing text side for card: %d", currentCard.getId());
+			// we show a textSideViewer
+			textSideViewer.setText(currentCard.getSide1Text());
+			cardView.addView(textSideViewer);
+		} else {
+			L.d("onClick StartButton", "Showing image side for card: %d", currentCard.getId());
+			// we show an imageSideViewer
+			imgSideViewer.setImageURI(currentCard.getSide1URI());
+			cardView.addView(imgSideViewer);
+		}
+		// and a see answer button.
+		cardView.addView(seeAnswerBtn);
 	}
 }
