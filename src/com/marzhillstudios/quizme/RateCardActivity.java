@@ -56,6 +56,7 @@ public class RateCardActivity extends Activity {
 		rateCard.setNumStars(5);
 		rateCard.setStepSize(1.0f);
 		rateCard.setRating(1f);
+		rating = 1;
 		Button doneBtn = (Button) findViewById(R.id.DoneRatingButton);
 		textSideViewer = new TextView(this);
         imgSideViewer = new ImageView(this);
