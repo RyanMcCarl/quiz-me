@@ -27,7 +27,6 @@ import com.marzhillstudios.quizme.util.L;
  */
 public class CardManagerActivity extends Activity {
     
-	// TODO(jwall): cleanup the databse on destroy;
 	private CardDatabase db;
     private CardListAdapter listAdapter;
     private ListView listView;
@@ -73,4 +72,10 @@ public class CardManagerActivity extends Activity {
     public CardDatabase getDb() {
         return db;
     }
+    
+    @Override
+    public void onDestroy() {
+    	db.close();
+    }
+    
 }

@@ -32,7 +32,6 @@ public class RateCardActivity extends Activity {
 	public static final String CARD_RATING_INTENT_RESULT_KEY = "card_rating";
 	public static final String CARD_RATING_INTENT_ID_KEY = "card_id";
 	
-	// TODO(jwall): cleanup the databse on destroy;
 	private CardDatabase db;
 	private Card card;
 	private Integer rating;
@@ -105,4 +104,10 @@ public class RateCardActivity extends Activity {
 		}
 		
 	}
+	
+	@Override
+    public void onDestroy() {
+    	db.close();
+    }
+    
 }

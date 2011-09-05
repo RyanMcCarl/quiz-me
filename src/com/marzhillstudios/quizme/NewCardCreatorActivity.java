@@ -34,7 +34,6 @@ import com.marzhillstudios.quizme.util.L;
 // TODO(jwall): perhaps this class can also be reused to edit cards?
 public class NewCardCreatorActivity extends Activity {
 
-	// TODO(jwall): cleanup the databse on destroy;
 	private CardDatabase db;
 
     public static final int REQUEST_SIDE1_IMAGE_RESULT = 1;
@@ -190,4 +189,10 @@ public class NewCardCreatorActivity extends Activity {
     	L.i("onPause", "returned id after upsert %d", card.getId());
     	L.i("onPause", "After: Cards id set to: %d", card.getId());
     }
+    
+    @Override
+    public void onDestroy() {
+    	db.close();
+    }
+    
 }
