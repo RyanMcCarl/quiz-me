@@ -38,6 +38,7 @@ public class QuizActivity extends Activity {
     private Button startBtn;
     private Button stopBtn;
     private Button seeAnswerBtn;
+    private TextView cardTitleViewer;
     private TextView textSideViewer;
     private ImageView imgSideViewer;
     
@@ -61,6 +62,7 @@ public class QuizActivity extends Activity {
         stopBtn.setText(res.getString(R.string.StopQuizButtonText));
         seeAnswerBtn = new Button(this);
         seeAnswerBtn.setText(res.getString(R.string.SeeAnswerButtonText));
+        cardTitleViewer = new TextView(this);
         textSideViewer = new TextView(this);
         imgSideViewer = new ImageView(this);
         
@@ -75,6 +77,8 @@ public class QuizActivity extends Activity {
 				showStopButton();
 				quizView.addView(cardView, 1);
 				cardView.removeAllViews();
+				cardView.addView(cardTitleViewer);
+				cardTitleViewer.setText(currentCard.getTitle());
 				// card view shows side 1 first
 				if (currentCard.getSide1Type() == Card.TEXT_TYPE) {
 					L.d("onClick StartButton", "Showing text side for card: %d", currentCard.getId());
@@ -88,7 +92,7 @@ public class QuizActivity extends Activity {
 					cardView.addView(imgSideViewer);
 				}
 				// and a see answer button.
-				cardView.addView(seeAnswerBtn, 1);
+				cardView.addView(seeAnswerBtn);
 		        
 		        // after rate activity returns we change card view for next card.
 			}
