@@ -112,6 +112,10 @@ public class Card {
     public Long getLastTimeMillis() {
     	return lastTime.getTime();
     }
+    
+    public Long getLastTimeSeconds() {
+    	return lastTime.getTime() / 1000;
+    }
 
 	public int getSide1Type() {
 		return side1Type;

@@ -63,7 +63,7 @@ public class CardDatabase extends SQLiteOpenHelper {
 		values.put("ef", card.getEFactor());
 		values.put("count", card.getCount());
 		values.put("interval", card.getInterval());
-		values.put("last", (Long)(card.getLastTimeMillis() / 1000));
+		values.put("last", card.getLastTimeSeconds());
 		return values;
     }
     public CardDatabase(Context context) {
@@ -138,7 +138,7 @@ public class CardDatabase extends SQLiteOpenHelper {
 		Float ef = cur.getFloat(6);
 		Integer count = cur.getInt(7);
 		Integer interval = cur.getInt(8);
-		Long last = cur.getLong(9);
+		Long last = cur.getLong(9) * 1000;
 		String side1 = cur.getString(3);
 		String side2 = cur.getString(5);
 		Card card = new Card(ident, title, side1, side2, ef);
