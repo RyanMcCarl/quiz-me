@@ -86,14 +86,13 @@ public class NewCardCreatorActivity extends Activity {
         }
         
         titleTextBox.setText(card.getTitle());
-        
+
+        imageUriSide1 = Uri.fromFile(new File(Environment.getExternalStorageDirectory(),  fileNamePrefix + "side1.png"));
         OnClickListener side1ImageBtnListener = new OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                File photo = new File(Environment.getExternalStorageDirectory(),  fileNamePrefix + "side1.png");
-                intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                        Uri.fromFile(photo));
-                imageUriSide1 = Uri.fromFile(photo);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUriSide1);
+                L.i("onClick side1ImageBtnListener", "image uri: %s", imageUriSide1.toString());
                 mainContext.startActivityForResult(intent,
                     REQUEST_SIDE1_IMAGE_RESULT);
             }
@@ -115,13 +114,12 @@ public class NewCardCreatorActivity extends Activity {
 
         side1TextBtn.setOnClickListener(side1TextBtnListener);
 
+        imageUriSide2 = Uri.fromFile(new File(Environment.getExternalStorageDirectory(),  fileNamePrefix + "side2.png"));
         OnClickListener side2ImageBtnListener = new OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            	File photo = new File(Environment.getExternalStorageDirectory(),  fileNamePrefix + "side2.png");
-                intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                        Uri.fromFile(photo));
-                imageUriSide2 = Uri.fromFile(photo);
+            	intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUriSide2);
+                L.i("onClick side2ImageBtnListener", "image uri: %s", imageUriSide2.toString());
                 mainContext.startActivityForResult(intent,
                     REQUEST_SIDE2_IMAGE_RESULT);
             }
@@ -189,6 +187,7 @@ public class NewCardCreatorActivity extends Activity {
     
     @Override
     public void onDestroy() {
+    	super.onDestroy();
     	db.close();
     }
     

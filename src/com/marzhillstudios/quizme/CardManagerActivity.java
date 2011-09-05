@@ -55,6 +55,7 @@ public class CardManagerActivity extends Activity {
 
     @Override
     public void onStart() {
+    	super.onStart();
     	// repaint the list
     	listAdapter.reset(db.getAllCards());
     	L.d("onStart", "Resetting list view to list of count %d", listAdapter.getCount());
@@ -75,6 +76,7 @@ public class CardManagerActivity extends Activity {
     
     @Override
     public void onDestroy() {
+    	super.onDestroy();
     	db.close();
     }
     

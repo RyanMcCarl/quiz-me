@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Quizzes the user with the currently scheduled cards.
@@ -47,7 +48,8 @@ public class QuizActivity extends Activity {
     
     private int currentIndex = 0;
     
-    @Override
+    // TODO(jwall): should we handle onSaveInstanceState?
+	@Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
         final QuizActivity self = this;
@@ -80,7 +82,6 @@ public class QuizActivity extends Activity {
         			Card currentCard = cards.get(currentIndex);
     				showStopButton();
     				quizView.addView(cardView, 1);
-    				cardView.removeAllViews();
     				showCard(currentCard);
         		} else {
         			handleNoCards();
@@ -131,6 +132,7 @@ public class QuizActivity extends Activity {
     
     @Override
     public void onDestroy() {
+    	super.onDestroy();
     	db.close();
     }
     
@@ -146,7 +148,8 @@ public class QuizActivity extends Activity {
     }
     
     public void handleNoCards() {
-    	// TODO(jwall): handle the no more cards case
+    	Toast msg = Toast.makeText(getApplicationContext(), R.string.NoMoreCards, Toast.LENGTH_LONG);
+    	msg.show();
     }
     
 	public List<Card> getCards() {
@@ -160,6 +163,7 @@ public class QuizActivity extends Activity {
 
 	
 	private void showCard(Card currentCard) {
+		cardView.removeAllViews();
 		cardView.addView(cardTitleViewer);
 		cardTitleViewer.setText(currentCard.getTitle());
 		// card view shows side 1 first

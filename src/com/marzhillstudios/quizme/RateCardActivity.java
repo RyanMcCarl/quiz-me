@@ -55,6 +55,7 @@ public class RateCardActivity extends Activity {
 		RatingBar rateCard = (RatingBar) findViewById(R.id.RateCardRatingBar);
 		rateCard.setNumStars(5);
 		rateCard.setStepSize(1.0f);
+		rateCard.setRating(1f);
 		Button doneBtn = (Button) findViewById(R.id.DoneRatingButton);
 		textSideViewer = new TextView(this);
         imgSideViewer = new ImageView(this);
@@ -102,6 +103,7 @@ public class RateCardActivity extends Activity {
 	
 	@Override
     public void onDestroy() {
+    	super.onDestroy();
     	db.close();
     }
     
