@@ -6,6 +6,8 @@
 
 package com.marzhillstudios.quizme;
 
+import java.util.Date;
+
 import com.marzhillstudios.quizme.algorithm.SM2;
 import com.marzhillstudios.quizme.data.Card;
 import com.marzhillstudios.quizme.data.CardDatabase;
@@ -90,6 +92,7 @@ public class RateCardActivity extends Activity {
 					SM2.scoreCardAndCalculateInterval(card, rating);
 					L.d("onClick doneListener", "Cards ef after: %f", card.getEFactor());
 					L.d("onClick doneListener", "Cards count after: %d", card.getCount());
+					card.setLastTime(new Date().getTime());
 					db.upsertCard(card);
 					self.setResult(QuizActivity.CARD_RATING_RESULT);
 					self.finish();
