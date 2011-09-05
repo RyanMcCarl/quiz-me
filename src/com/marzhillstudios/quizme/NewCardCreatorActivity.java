@@ -31,7 +31,6 @@ import com.marzhillstudios.quizme.util.L;
  */
 // TODO(jwall): unit tests for this class.
 // TODO(jwall): should this activity implement some sendTo intents?
-// TODO(jwall): perhaps this class can also be reused to edit cards?
 public class NewCardCreatorActivity extends Activity {
 
 	private CardDatabase db;
@@ -77,20 +76,21 @@ public class NewCardCreatorActivity extends Activity {
         	Long id = intention.getExtras().getLong(CARD_INTENT_KEY);
         	L.d("NewCardCreatorActivity onCreate", "Retrieving Card with id %d", id);
         	card = db.getCard(intention.getExtras().getLong(CARD_INTENT_KEY));
+        	fileNamePrefix = String.format("card_%d_", card.getId());
         } else {
         	// new card
         	Resources res = getResources();
         	card = new Card(res.getString(R.string.NewCardDialogTitleDefault),
         			res.getString(R.string.Side1Text), res.getString(R.string.Side2Text));
+        	fileNamePrefix = String.format("card_%d_", db.getNextCardId());
         }
         
         titleTextBox.setText(card.getTitle());
         
-        // TODO(jwall): handle the update case.
         OnClickListener side1ImageBtnListener = new OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            	File photo = new File(Environment.getExternalStorageDirectory(),  fileNamePrefix + "side1.png");
+                File photo = new File(Environment.getExternalStorageDirectory(),  fileNamePrefix + "side1.png");
                 intent.putExtra(MediaStore.EXTRA_OUTPUT,
                         Uri.fromFile(photo));
                 imageUriSide1 = Uri.fromFile(photo);
@@ -182,12 +182,9 @@ public class NewCardCreatorActivity extends Activity {
     @Override
     public void onPause() {
     	super.onPause();
-    	L.d("onPause", "Before: Cards id set to: %d", card.getId());
     	card.setTitle(titleTextBox.getText().toString());
     	Long id = this.db.upsertCard(card);
     	card.setId(id);
-    	L.i("onPause", "returned id after upsert %d", card.getId());
-    	L.i("onPause", "After: Cards id set to: %d", card.getId());
     }
     
     @Override

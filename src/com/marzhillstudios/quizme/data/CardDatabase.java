@@ -52,6 +52,7 @@ public class CardDatabase extends SQLiteOpenHelper {
     private static final String cardsForQuizQry = "select * from card_table where " +
     		"date(last, 'unixepoch', '+' || interval || ' days') > date('now')" +
     		"order by random()";
+    private static final String nextIdQry = "select max(id) + 1 from card_table";
     
     public static ContentValues contentValuesFromCard(Card card) {
     	ContentValues values = new ContentValues();
@@ -109,6 +110,16 @@ public class CardDatabase extends SQLiteOpenHelper {
     	// select all cards for which the last(timestamp) + interval (days) < today
     	SQLiteDatabase db = getReadableDatabase();
         return db.rawQuery(cardsForQuizQry, null);
+    }
+    
+    public Long getNextCardId() {
+    	SQLiteDatabase db = getReadableDatabase();
+    	Cursor cur = db.rawQuery(nextIdQry, null);
+    	if (cur.getCount() == 1) {
+    		cur.moveToFirst();
+    		return cur.getLong(0);
+    	}
+    	return 1L;
     }
     
     /**
