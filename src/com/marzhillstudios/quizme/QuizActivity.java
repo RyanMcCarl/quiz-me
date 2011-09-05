@@ -98,8 +98,6 @@ public class QuizActivity extends Activity {
 			}
         };
         
-        // TODO(jwall): on see answer button card view launches a rate activity
-        startBtn.setOnClickListener(startClickListener);
         OnClickListener stopClickListener = new OnClickListener() {
         	public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -108,9 +106,12 @@ public class QuizActivity extends Activity {
 				// start our cleanup here.
 			}
         };
+        
+        // TODO(jwall): on see answer button card view launches a rate activity
+        startBtn.setOnClickListener(startClickListener);
         stopBtn.setOnClickListener(stopClickListener);
         
-        //cv.removeView(stopBtn);
+        
         // after all cards we get next set of cards again.
         // repeat until user quits or we return no more cards.
     }
