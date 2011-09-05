@@ -58,7 +58,7 @@ public class Card {
       this.side1 = side1;
       this.side2 = side2;
       this.eFactor = SM2.E_FACTOR_FLOOR;
-      SM2.calculateInterval(this);
+      this.interval = SM2.INTERVAL_FLOOR;
     }
 
     public void setTitle(String title) {
@@ -93,6 +93,10 @@ public class Card {
         this.count = count;
     }
 
+    public void incrementCount() {
+    	this.count++;
+    }
+    
     public int getInterval() {
         return interval;
     }

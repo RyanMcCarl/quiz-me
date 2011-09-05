@@ -26,6 +26,7 @@ public class SM2 {
   public static final int MAX_QUALITY = 5;
   public static final int QUALITY_SUBTRACTOR = 5;
   public static final float E_FACTOR_FLOOR = 1.3f;
+  public static final int INTERVAL_FLOOR = 1;
   
   /**
    * Score a Card and set it's correct E-Factor.
@@ -40,8 +41,8 @@ public class SM2 {
   }
 
   public static void calculateInterval(Card card) {
-      int interval = 1;
-      if (card.getEFactor() < 3) {
+      int interval = card.getInterval();
+      if (card.getEFactor() < 3f) {
           card.setCount(1);
       }
       int count = card.getCount();

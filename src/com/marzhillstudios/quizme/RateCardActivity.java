@@ -9,6 +9,7 @@ package com.marzhillstudios.quizme;
 import com.marzhillstudios.quizme.algorithm.SM2;
 import com.marzhillstudios.quizme.data.Card;
 import com.marzhillstudios.quizme.data.CardDatabase;
+import com.marzhillstudios.quizme.util.L;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -39,7 +40,8 @@ public class RateCardActivity extends Activity {
     private ImageView imgSideViewer;
     
 	@Override
-	public void onCreate(Bundle bundle) {
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 		db = new CardDatabase(this);
 		setContentView(R.layout.rate_card_view);
 		Intent intent = getIntent();
@@ -49,7 +51,14 @@ public class RateCardActivity extends Activity {
 		FrameLayout cardFrame = (FrameLayout) findViewById(R.id.CardFrame);
 		TextView cardTitle = (TextView) findViewById(R.id.RateCardTitle);
 		RatingBar rateCard = (RatingBar) findViewById(R.id.RateCardRatingBar);
+		rateCard.setNumStars(5);
+		//rateCard.setMax(5);
+		//rateCard.setRating(3.0f);
+		rateCard.setStepSize(1.0f);
 		Button doneBtn = (Button) findViewById(R.id.DoneRatingButton);
+		textSideViewer = new TextView(this);
+        imgSideViewer = new ImageView(this);
+        
 		final RateCardActivity self = this;
 		
 		if (card != null) {
@@ -65,15 +74,22 @@ public class RateCardActivity extends Activity {
 			OnRatingBarChangeListener ratingListener = new OnRatingBarChangeListener() {
 				public void onRatingChanged(RatingBar arg0, float ratingFloat,
 						boolean arg2) {
-					// TODO(jwall): Handle the rating change.
 					rating = Math.round(ratingFloat);
+					L.d("onRatingChanged", "Rating is now %d from float: %f", rating, ratingFloat);
 				}
 			};
 			
 			OnClickListener doneListener = new OnClickListener() {
 				public void onClick(View v) {
 					// TODO(jwal): finalize the rating.
+					L.d("onClick doneListener", "Cards count before: %d", card.getCount());
+					card.incrementCount();
+					L.d("onClick doneListener", "Cards count after: %d", card.getCount());
+					L.d("onClick doneListener", "Finalizing rating: %d for Card: %d", rating, card.getId());
+					L.d("onClick doneListener", "Cards ef before: %f", card.getEFactor());
 					SM2.scoreCardAndCalculateInterval(card, rating);
+					L.d("onClick doneListener", "Cards ef after: %f", card.getEFactor());
+					L.d("onClick doneListener", "Cards count after: %d", card.getCount());
 					db.upsertCard(card);
 					self.finish();
 				}

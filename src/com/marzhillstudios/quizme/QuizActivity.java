@@ -13,6 +13,7 @@ import com.marzhillstudios.quizme.data.CardDatabase;
 import com.marzhillstudios.quizme.util.L;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
@@ -46,6 +47,8 @@ public class QuizActivity extends Activity {
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
+    	super.onCreate(savedInstanceState);
+        final QuizActivity self = this;
     	Resources res = getResources();
         super.onCreate(savedInstanceState);
         quizView = (LinearLayout) getLayoutInflater().inflate(R.layout.quiz, null);
@@ -70,6 +73,7 @@ public class QuizActivity extends Activity {
         stopBtn.setText(res.getString(R.string.StopQuizButtonText));
         quizView.addView(startBtn, 0);
         
+        // TODO(jwall): handle the no cards case
         OnClickListener startClickListener = new OnClickListener() {
         	public void onClick(View v) {
 				Card currentCard = cards.get(currentIndex);
@@ -109,7 +113,10 @@ public class QuizActivity extends Activity {
         
         OnClickListener seeAnswerListener = new OnClickListener() {
         	public void onClick(View v) {
-        		// TODO(jwall): Launch a rate activity for result
+        		Card currentCard = cards.get(currentIndex);
+        		Intent intent = new Intent(self, RateCardActivity.class);
+        		intent.putExtra(RateCardActivity.CARD_RATING_INTENT_ID_KEY, currentCard.getId());
+        		self.startActivity(intent);
         	}
         };
         
