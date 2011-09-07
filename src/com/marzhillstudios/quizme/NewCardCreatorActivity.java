@@ -50,6 +50,8 @@ public class NewCardCreatorActivity extends Activity {
 
     private Card card;
     private String fileNamePrefix;
+    private String side1Text;
+    private String side2Text;
 	private Uri imageUriSide2;
 	private Uri imageUriSide1;
     
@@ -70,6 +72,10 @@ public class NewCardCreatorActivity extends Activity {
                 (Button) mainContext.findViewById(R.id.NewCardSide2ImageBtn);
         side2TextBtn =
                 (Button) mainContext.findViewById(R.id.NewCardSide2TextBtn);
+
+        Resources res = getResources();
+    	side1Text = res.getString(R.string.Side1Text);
+        side2Text = res.getString(R.string.Side2Text);
         
         if (intention.hasExtra(CARD_INTENT_KEY)) {
         	// we are editing a card
@@ -79,9 +85,8 @@ public class NewCardCreatorActivity extends Activity {
         	fileNamePrefix = String.format("card_%d_", card.getId());
         } else {
         	// new card
-        	Resources res = getResources();
-        	card = new Card(res.getString(R.string.NewCardDialogTitleDefault),
-        			res.getString(R.string.Side1Text), res.getString(R.string.Side2Text));
+        	card = new Card(
+        			res.getString(R.string.NewCardDialogTitleDefault), side1Text, side2Text);
         	fileNamePrefix = String.format("card_%d_", db.getNextCardId());
         }
         
@@ -103,7 +108,7 @@ public class NewCardCreatorActivity extends Activity {
         OnClickListener side1TextBtnListener = new OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(mainContext, TextCardEditActivity.class);
-                intent.putExtra(TextCardEditActivity.EXTRA_KEY, "Side 1");
+                intent.putExtra(TextCardEditActivity.EXTRA_KEY, side1Text);
                 intent.setType("text/plain");
                 L.d("NewCardCreatorAtvivtyService side1TextBtnListener",
                 		"Launching the Text editing service.");
@@ -130,7 +135,7 @@ public class NewCardCreatorActivity extends Activity {
         OnClickListener side2TextBtnListener = new OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(mainContext, TextCardEditActivity.class);
-                intent.putExtra(TextCardEditActivity.EXTRA_KEY, "Side 2");
+                intent.putExtra(TextCardEditActivity.EXTRA_KEY, side2Text);
                 intent.setType("text/plain");
                 L.d("NewCardCreatorAtvivtyService side2TextBtnListener",
                 		"Launching the Text editing service.");
