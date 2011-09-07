@@ -1,66 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/NewCardLayout"
-    android:orientation="vertical"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollViewNewCardDialog"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-<TextView android:id="@+id/NewCardDialogId"
-          android:text="@string/NewCardDialogTitle"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content" />
-
-<EditText android:id="@+id/NewCardTitleEditable"
-          android:editable="true"
-          android:text="@string/NewCardDialogTitleDefault"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content" />
-<LinearLayout android:id="@+id/NewCardSide1"
-              android:orientation="vertical"
-              android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <LinearLayout android:id="@+id/NewCardLayout"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        >
+    <TextView android:id="@+id/NewCardDialogId"
+              android:text="@string/NewCardDialogTitle"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content" />
+    
+    <EditText android:id="@+id/NewCardTitleEditable"
+              android:editable="true"
+              android:text="@string/NewCardDialogTitleDefault"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content" />
+    <LinearLayout android:id="@+id/NewCardSide1"
+                  android:orientation="vertical"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  >
+    
+      <TextView android:id="@+id/NewCardDialogId"
+              android:text="@string/NewCardDialogSide1"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content" />
+      
+      <Button android:id="@+id/NewCardSide1ImageBtn"
+              android:text="@string/NewCardChooseImage"
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              >
-
-  <TextView android:id="@+id/NewCardDialogId"
-          android:text="@string/NewCardDialogSide1"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content" />
-  
-  <Button android:id="@+id/NewCardSide1ImageBtn"
-          android:text="@string/NewCardChooseImage"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          />
-
-  <Button android:id="@+id/NewCardSide1TextBtn"
-          android:text="@string/NewCardChooseText"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          />
-          
-</LinearLayout>
-<LinearLayout android:id="@+id/NewCardSide2"
-              android:orientation="vertical"
-              android:layout_width="fill_parent"
+              />
+    
+      <Button android:id="@+id/NewCardSide1TextBtn"
+              android:text="@string/NewCardChooseText"
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              >
-
-  <TextView android:id="@+id/NewCardDialogId"
-          android:text="@string/NewCardDialogSide2"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content" />
-  
-  <Button android:id="@+id/NewCardSide2ImageBtn"
-          android:text="@string/NewCardChooseImage"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          />
-
-  <Button android:id="@+id/NewCardSide2TextBtn"
-          android:text="@string/NewCardChooseText"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          />
-          
-</LinearLayout>
-</LinearLayout>
+              />
+              
+    </LinearLayout>
+    <LinearLayout android:id="@+id/NewCardSide2"
+                  android:orientation="vertical"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  >
+    
+      <TextView android:id="@+id/NewCardDialogId"
+              android:text="@string/NewCardDialogSide2"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content" />
+      
+      <Button android:id="@+id/NewCardSide2ImageBtn"
+              android:text="@string/NewCardChooseImage"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              />
+    
+      <Button android:id="@+id/NewCardSide2TextBtn"
+              android:text="@string/NewCardChooseText"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              />
+              
+    </LinearLayout>
+    </LinearLayout>
+</ScrollView>

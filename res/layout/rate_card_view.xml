@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:orientation="vertical"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent" android:weightSum="1">
-    <TextView android:id="@+id/RateCardTitle" android:layout_height="wrap_content"
-    		  android:text="TextView" android:layout_width="match_parent" android:layout_weight="0.1"></TextView>
-    <FrameLayout android:layout_height="wrap_content" android:layout_width="match_parent"
-                 android:id="@+id/CardFrame" android:layout_weight="0.55"></FrameLayout>
-    <RatingBar android:id="@+id/RateCardRatingBar" android:layout_gravity="center"
-               android:numStars="5" android:stepSize="1.0"
-               android:layout_height="wrap_content" android:layout_width="wrap_content"></RatingBar>
-    <Button android:layout_height="wrap_content" android:layout_weight="0.1" android:layout_width="match_parent"
-            android:text="@string/DoneRatingButton" android:id="@+id/DoneRatingButton"
-            android:layout_gravity="bottom"></Button>
-    
-</LinearLayout>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollViewRatingCardId"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+      android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent" android:weightSum="1">
+        <TextView android:id="@+id/RateCardTitle" android:layout_height="wrap_content"
+        		  android:text="TextView" android:layout_width="match_parent" android:layout_weight="0.1"></TextView>
+        <FrameLayout android:layout_height="wrap_content" android:layout_width="match_parent"
+                     android:id="@+id/CardFrame" android:layout_weight="0.55"></FrameLayout>
+        <RatingBar android:id="@+id/RateCardRatingBar" android:layout_gravity="center"
+                   android:numStars="5" android:stepSize="1.0"
+                   android:layout_height="wrap_content" android:layout_width="wrap_content"></RatingBar>
+        <Button android:layout_height="wrap_content" android:layout_weight="0.1" android:layout_width="match_parent"
+                android:text="@string/DoneRatingButton" android:id="@+id/DoneRatingButton"
+                android:layout_gravity="bottom"></Button>
+        
+    </LinearLayout>
+</ScrollView>
