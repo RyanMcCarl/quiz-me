@@ -53,8 +53,6 @@ public class RateCardActivity extends Activity {
 		FrameLayout cardFrame = (FrameLayout) findViewById(R.id.CardFrame);
 		TextView cardTitle = (TextView) findViewById(R.id.RateCardTitle);
 		RatingBar rateCard = (RatingBar) findViewById(R.id.RateCardRatingBar);
-		rateCard.setNumStars(5);
-		rateCard.setStepSize(1.0f);
 		rateCard.setRating(1f);
 		rating = 1;
 		Button doneBtn = (Button) findViewById(R.id.DoneRatingButton);
