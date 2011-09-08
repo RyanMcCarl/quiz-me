@@ -108,7 +108,7 @@ public class NewCardCreatorActivity extends Activity {
         OnClickListener side1TextBtnListener = new OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(mainContext, TextCardEditActivity.class);
-                intent.putExtra(TextCardEditActivity.EXTRA_KEY, side1Text);
+                intent.putExtra(TextCardEditActivity.EXTRA_KEY, card.side1);
                 intent.setType("text/plain");
                 L.d("NewCardCreatorAtvivtyService side1TextBtnListener",
                 		"Launching the Text editing service.");
@@ -135,7 +135,7 @@ public class NewCardCreatorActivity extends Activity {
         OnClickListener side2TextBtnListener = new OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(mainContext, TextCardEditActivity.class);
-                intent.putExtra(TextCardEditActivity.EXTRA_KEY, side2Text);
+                intent.putExtra(TextCardEditActivity.EXTRA_KEY, card.side2);
                 intent.setType("text/plain");
                 L.d("NewCardCreatorAtvivtyService side2TextBtnListener",
                 		"Launching the Text editing service.");
