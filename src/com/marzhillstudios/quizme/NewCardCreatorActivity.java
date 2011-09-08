@@ -169,13 +169,17 @@ public class NewCardCreatorActivity extends Activity {
                 break;
             case REQUEST_SIDE1_TEXT_RESULT:
             	card.setSide1Type(Card.TEXT_TYPE);
-            	card.side1 = data.getExtras().getString(TextCardEditActivity.EXTRA_KEY);
+            	if (data != null && data.hasExtra(TextCardEditActivity.EXTRA_KEY)) {
+            		card.side1 = data.getExtras().getString(TextCardEditActivity.EXTRA_KEY);
+            	}
                 L.d("NewCardCreatorActivity onActivityResult",
                     "Recieved text result for side 1 %s", card.side1);
                 break;
             case REQUEST_SIDE2_TEXT_RESULT:
             	card.setSide2Type(Card.TEXT_TYPE);
-            	card.side2 = data.getExtras().getString(TextCardEditActivity.EXTRA_KEY);
+            	if (data != null && data.hasExtra(TextCardEditActivity.EXTRA_KEY)) {
+            		card.side2 = data.getExtras().getString(TextCardEditActivity.EXTRA_KEY);
+            	}
                 L.d("NewCardCreatorActivity onActivityResult",
                     "Recieved text result for side 2 %s", card.side2);
                 break;
