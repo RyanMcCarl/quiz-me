@@ -16,6 +16,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Environment;
 
 /**
  * The Data access layer for our Card Database.
@@ -30,7 +31,8 @@ public class CardDatabase extends SQLiteOpenHelper {
     public static final int CARD_TITLE_COLUMN = 1;
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "/sdcard/quizme/quiz_me_db";
+    private static final String DATABASE_DIR = Environment.getExternalStorageDirectory() + "/quizme";
+    private static final String DATABASE_NAME = DATABASE_DIR + "/quiz_me_db";
     private static final String CARDS_TABLE_NAME = "card_table";
     private static final String STATS_TABLE_NAME = "card_stats_table";
     private static final String TAGS_TABLE_NAME = "card_tags_table";
