@@ -31,8 +31,7 @@ public class CardDatabase extends SQLiteOpenHelper {
     public static final int CARD_TITLE_COLUMN = 1;
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_DIR = Environment.getExternalStorageDirectory() + "/quizme";
-    private static final String DATABASE_NAME = DATABASE_DIR + "/quiz_me_db";
+    private static final String DATABASE_NAME = "quiz_me_db";
     private static final String CARDS_TABLE_NAME = "card_table";
     private static final String STATS_TABLE_NAME = "card_stats_table";
     private static final String TAGS_TABLE_NAME = "card_tags_table";
@@ -70,7 +69,7 @@ public class CardDatabase extends SQLiteOpenHelper {
 		return values;
     }
     public CardDatabase(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, context.getDatabasePath(DATABASE_NAME).toString(), null, DATABASE_VERSION);
     }
     
     /* (non-Javadoc)
