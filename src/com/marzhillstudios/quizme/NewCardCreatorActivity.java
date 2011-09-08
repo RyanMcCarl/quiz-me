@@ -182,18 +182,13 @@ public class NewCardCreatorActivity extends Activity {
         }
     }
 
-    @Override
+   @Override
     public void onPause() {
     	super.onPause();
     	card.setTitle(titleTextBox.getText().toString());
-    	Long id = this.db.upsertCard(card);
+    	Long id = db.upsertCard(card);
     	card.setId(id);
-    }
-    
-    @Override
-    public void onDestroy() {
-    	super.onDestroy();
     	db.close();
+
     }
-    
 }

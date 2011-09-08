@@ -75,8 +75,8 @@ public class CardManagerActivity extends Activity {
     }
     
     @Override
-    public void onDestroy() {
-    	super.onDestroy();
+    public void onPause() {
+    	super.onPause();
     	db.close();
     }
     
