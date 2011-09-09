@@ -10,12 +10,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.marzhillstudios.quizme.NewCardCreatorActivity;
+import com.marzhillstudios.quizme.R;
 import com.marzhillstudios.quizme.data.CardDatabase;
 import com.marzhillstudios.quizme.util.L;
 
@@ -47,37 +50,55 @@ public class CardListAdapter extends BaseAdapter {
 
       @SuppressWarnings("unused")
       private String title;
-      @SuppressWarnings("unused")
       private Long id;
-      private TextView listItem;
+      private LinearLayout container;
+      private TextView listText;
       
       public CardView(final Context context, final Long id, String title) {
         super(context);
+        final CardView self = this;
         this.title = title;
         this.id = id;
-        listItem = new TextView(context);
+        L.d("CardView", "Creating card listing for id: %d", id);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        container = (LinearLayout) inflater.inflate(R.layout.card_list_item, null);
+        listText = (TextView) container.findViewById(R.id.CardListTitleView);
+        Button deleteButton = (Button) container.findViewById(R.id.CardListButtonView);
         
         // TextViews need to respond to the onClick event
         OnClickListener updateCardListener = new OnClickListener() {
             public void onClick(View v) {
-            	L.d("onClick", "Opening card editor for card id: %d", id);
+            	L.d("onClick", "Opening card editor for card id: %d spawned by view id: %d",
+            			self.id, v.getId());
             	Intent intent = new Intent(context, NewCardCreatorActivity.class);
-            	intent.putExtra(NewCardCreatorActivity.CARD_INTENT_KEY, id);
+            	intent.putExtra(NewCardCreatorActivity.CARD_INTENT_KEY, self.id);
                 context.startActivity(
                     intent);
             }
         };
         
-        listItem.setOnClickListener(updateCardListener);
+        OnClickListener deleteButtonListener = new OnClickListener() {
+        	public void onClick(View v) {
+        		L.d("onClick", "Deleting card id: %d spawned by button id: %d",
+        				self.id, v.getId());
+            	CardDatabase db = new CardDatabase(context);
+        		db.deleteCard(self.id);
+            	db.close();
+            	self.invalidate();
+        	}
+        };
+        
+        deleteButton.setOnClickListener(deleteButtonListener);
+        listText.setOnClickListener(updateCardListener);
         setTitle(title);
-        addView(listItem,
+        addView(container,
                 new LinearLayout.LayoutParams(
                     LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
       }
 
       public void setTitle(String title) {
         this.title = title;
-        listItem.setText(title);
+        listText.setText(title);
       }
 
       public void setId(Long id) {
@@ -116,6 +137,6 @@ public class CardListAdapter extends BaseAdapter {
     
     public void reset(Cursor cursor) {
     	this.cursor = cursor;
-    	this.notifyDataSetChanged();
+    	this.notifyDataSetInvalidated();
     }
 }
