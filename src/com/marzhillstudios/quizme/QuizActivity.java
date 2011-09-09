@@ -98,7 +98,9 @@ public class QuizActivity extends Activity {
         
         OnClickListener seeAnswerListener = new OnClickListener() {
         	public void onClick(View v) {
-        		Card currentCard = cards.get(currentIndex);
+        		Card currentCard = self.getCards().get(currentIndex);
+        		L.d(QuizActivity.class.getName(), "Seeing Answer for card index: %d, id: %d",
+        				currentIndex, currentCard.getId());
         		Intent intent = new Intent(self, RateCardActivity.class);
         		intent.putExtra(RateCardActivity.CARD_RATING_INTENT_ID_KEY, currentCard.getId());
         		self.startActivityForResult(intent, CARD_RATING_RESULT);
@@ -116,13 +118,12 @@ public class QuizActivity extends Activity {
     	if (requestCode == CARD_RATING_RESULT) {
     		currentIndex++;
     		if (currentIndex < cards.size()) {
-    			showCard(cards.get(currentIndex));
+    			showCurrentCard();
     		} else {
-    			// after all cards we get next set of cards again.
-    			cards = db.cursorToCards(db.getCardsForQuiz());
+    			setCards(db.cursorToCards(db.getCardsForQuiz()));
     			if (cards != null) {
     				currentIndex = 0;
-    				showCard(cards.get(currentIndex));
+    				showCurrentCard();
     			} else {
     				handleNoCards();
     			}
@@ -161,6 +162,12 @@ public class QuizActivity extends Activity {
 		this.cards = cards;
 	}
 
+	private void showCurrentCard() {
+		Card card = cards.get(currentIndex);
+		showCard(card);
+		L.d(QuizActivity.class.getName(), "Showing current card index: %d id: %d",
+				currentIndex, card.getId());
+	}
 	
 	private void showCard(Card currentCard) {
 		cardView.removeAllViews();
