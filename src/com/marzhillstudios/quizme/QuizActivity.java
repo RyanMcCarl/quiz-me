@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -43,6 +44,7 @@ public class QuizActivity extends Activity {
     private Button stopBtn;
     private Button seeAnswerBtn;
     private TextView cardTitleViewer;
+    private FrameLayout sideView;
     private TextView textSideViewer;
     private ImageView imgSideViewer;
     
@@ -66,9 +68,9 @@ public class QuizActivity extends Activity {
         startBtn.setText(res.getString(R.string.StartQuizButtonText));
         stopBtn = new Button(this);
         stopBtn.setText(res.getString(R.string.StopQuizButtonText));
-        seeAnswerBtn = new Button(this);
-        seeAnswerBtn.setText(res.getString(R.string.SeeAnswerButtonText));
-        cardTitleViewer = new TextView(this);
+        seeAnswerBtn = (Button) cardView.findViewById(R.id.CardViewAnswerButton);
+        cardTitleViewer = (TextView)  cardView.findViewById(R.id.CardViewTitleText);
+        sideView = (FrameLayout) cardView.findViewById(R.id.CardViewSideFrame);
         textSideViewer = new TextView(this);
         imgSideViewer = new ImageView(this);
         
@@ -170,22 +172,19 @@ public class QuizActivity extends Activity {
 	}
 	
 	private void showCard(Card currentCard) {
-		cardView.removeAllViews();
-		cardView.addView(cardTitleViewer);
+		sideView.removeAllViews();
 		cardTitleViewer.setText(currentCard.getTitle());
 		// card view shows side 1 first
 		if (currentCard.getSide1Type() == Card.TEXT_TYPE) {
 			L.d("onClick StartButton", "Showing text side for card: %d", currentCard.getId());
 			// we show a textSideViewer
 			textSideViewer.setText(currentCard.getSide1Text());
-			cardView.addView(textSideViewer);
+			sideView.addView(textSideViewer);
 		} else {
 			L.d("onClick StartButton", "Showing image side for card: %d", currentCard.getId());
 			// we show an imageSideViewer
 			imgSideViewer.setImageURI(currentCard.getSide1URI());
-			cardView.addView(imgSideViewer);
+			sideView.addView(imgSideViewer);
 		}
-		// and a see answer button.
-		cardView.addView(seeAnswerBtn);
 	}
 }
