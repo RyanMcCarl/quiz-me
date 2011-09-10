@@ -4,9 +4,11 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    >
+    android:weightSum="1">
 <Button android:id="@+id/launchManagerBtn" android:text="@string/LaunchManagerButton" android:layout_height="wrap_content" android:layout_width="match_parent"></Button>
 <Button android:layout_width="match_parent" android:id="@+id/LaunchQuizBtn" android:text="@string/LaunchQuizButton" android:layout_height="wrap_content"></Button>
+<TextView android:layout_height="wrap_content" android:paddingTop="20dp"
+          android:layout_width="match_parent" android:text="@string/MainHelpText" android:id="@+id/MainHelpText"></TextView>
 
 
 </LinearLayout>

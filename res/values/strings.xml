@@ -27,4 +27,5 @@
   <string name="DoneRatingButton">Done</string>
   <string name="NoMoreCards">No More Cards :-)</string>
   <string name="CardDeleteButton">Delete</string>
+  <string name="MainHelpText">Quiz-Me is a spaced repetition flashcard app for Android. It shows flashcards using an algorithm to schedule the cards you are just about to forget.</string>
 </resources>
