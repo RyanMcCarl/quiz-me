@@ -31,6 +31,7 @@ import com.marzhillstudios.quizme.util.L;
  */
 // TODO(jwall): unit tests for this class.
 // TODO(jwall): should this activity implement some sendTo intents?
+// TODO(jwall): Audio card sides?
 public class NewCardCreatorActivity extends Activity {
 
 	private CardDatabase db;
