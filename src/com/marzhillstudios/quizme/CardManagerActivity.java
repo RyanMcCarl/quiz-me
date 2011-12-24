@@ -19,14 +19,14 @@ import com.marzhillstudios.quizme.data.CardDatabase;
 import com.marzhillstudios.quizme.util.L;
 
 /**
- * 
+ *
  * Activity for managing cards. This Activity will be responsible for
  * handling Card Creation/Editing/Deletion and Import/Export.
- * 
+ *
  * @author Jeremy Wall <jeremy@marzhillstudios.com>
  */
 public class CardManagerActivity extends Activity {
-    
+
 	private CardDatabase db;
     private CardListAdapter listAdapter;
     private ListView listView;
@@ -61,7 +61,7 @@ public class CardManagerActivity extends Activity {
     	L.d("onStart", "Resetting list view to list of count %d", listAdapter.getCount());
     	super.onStart();
     }
-    
+
     public CardListAdapter getListAdapter() {
         return listAdapter;
     }
@@ -73,11 +73,11 @@ public class CardManagerActivity extends Activity {
     public CardDatabase getDb() {
         return db;
     }
-    
+
     @Override
     public void onPause() {
     	super.onPause();
     	db.close();
     }
-    
+
 }

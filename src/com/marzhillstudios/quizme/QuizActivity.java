@@ -29,15 +29,15 @@ import android.widget.Toast;
  * Quizzes the user with the currently scheduled cards.
  *
  *  @author Jeremy Wall <jeremy@marzhillstudios.com>
- *  
+ *
  */
 public class QuizActivity extends Activity {
-    
+
 	protected static final int CARD_RATING_RESULT = 0;
-	
+
 	private CardDatabase db;
     private List<Card> cards;
-    
+
     private LinearLayout quizView;
     private LinearLayout cardView;
     private Button startBtn;
@@ -47,9 +47,9 @@ public class QuizActivity extends Activity {
     private FrameLayout sideView;
     private TextView textSideViewer;
     private ImageView imgSideViewer;
-    
+
     private int currentIndex = 0;
-    
+
     // TODO(jwall): should we handle onSaveInstanceState?
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,7 +63,7 @@ public class QuizActivity extends Activity {
         db = new CardDatabase(this);
         final List<Card> cards = db.cursorToCards(db.getCardsForQuiz());
         setCards(cards);
-        
+
         startBtn = new Button(this);
         startBtn.setText(res.getString(R.string.StartQuizButtonText));
         stopBtn = new Button(this);
@@ -73,11 +73,11 @@ public class QuizActivity extends Activity {
         sideView = (FrameLayout) cardView.findViewById(R.id.CardViewSideFrame);
         textSideViewer = new TextView(this);
         imgSideViewer = new ImageView(this);
-        
+
         startBtn.setText(res.getString(R.string.StartQuizButtonText));
         stopBtn.setText(res.getString(R.string.StopQuizButtonText));
         quizView.addView(startBtn, 0);
-        
+
         OnClickListener startClickListener = new OnClickListener() {
         	public void onClick(View v) {
         		if (cards != null) {
@@ -90,14 +90,14 @@ public class QuizActivity extends Activity {
         		}
 			}
         };
-        
+
         OnClickListener stopClickListener = new OnClickListener() {
         	public void onClick(View v) {
 				showStartButton();
 				quizView.removeView(cardView);
 			}
         };
-        
+
         OnClickListener seeAnswerListener = new OnClickListener() {
         	public void onClick(View v) {
         		Card currentCard = self.getCards().get(currentIndex);
@@ -108,13 +108,13 @@ public class QuizActivity extends Activity {
         		self.startActivityForResult(intent, CARD_RATING_RESULT);
         	}
         };
-        
+
         startBtn.setOnClickListener(startClickListener);
         stopBtn.setOnClickListener(stopClickListener);
         seeAnswerBtn.setOnClickListener(seeAnswerListener);
-        
+
     }
-    
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
     	// after rate activity returns we change card view for next card.
     	if (requestCode == CARD_RATING_RESULT) {
@@ -132,33 +132,33 @@ public class QuizActivity extends Activity {
     		}
     	}
     }
-    
+
     @Override
     public void onPause() {
     	super.onPause();
     	db.close();
     }
-    
+
 
     private void showStopButton() {
     	quizView.removeView(startBtn);
         quizView.addView(stopBtn, 0);
     }
-    
+
     private void showStartButton() {
     	quizView.removeView(stopBtn);
         quizView.addView(startBtn, 0);
     }
-    
+
     public void handleNoCards() {
     	Toast msg = Toast.makeText(getApplicationContext(), R.string.NoMoreCards, Toast.LENGTH_LONG);
     	msg.show();
     }
-    
+
 	public List<Card> getCards() {
 		return cards;
 	}
-	
+
 
 	public void setCards(List<Card> cards) {
 		this.cards = cards;
@@ -170,7 +170,7 @@ public class QuizActivity extends Activity {
 		L.d(QuizActivity.class.getName(), "Showing current card index: %d id: %d",
 				currentIndex, card.getId());
 	}
-	
+
 	private void showCard(Card currentCard) {
 		sideView.removeAllViews();
 		cardTitleViewer.setText(currentCard.getTitle());

@@ -25,7 +25,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 // TODO(jwall): Unit tests for this class.
 public class CardDatabase extends SQLiteOpenHelper {
-	
+
     public static final int CARD_ID_COLUMN = 0;
     public static final int CARD_TITLE_COLUMN = 1;
 
@@ -48,12 +48,12 @@ public class CardDatabase extends SQLiteOpenHelper {
     private static final String CARDS_TITLE_INDEX_NAME = "card_title_index";
     private static final String CARDS_TITLE_INDEX_COLUMN =
         CARDS_TABLE_COLUMNS_ARRAY[CARD_TITLE_COLUMN];
-    
+
     private static final String cardsForQuizQry = "select * from card_table where " +
     		"date(last, 'unixepoch', '+' || interval || ' days') >= date('now')" +
     		"order by random()";
     private static final String nextIdQry = "select max(id) + 1 from card_table";
-    
+
     public static ContentValues contentValuesFromCard(Card card) {
     	ContentValues values = new ContentValues();
 		values.put("title", card.getTitle());
@@ -70,7 +70,7 @@ public class CardDatabase extends SQLiteOpenHelper {
     public CardDatabase(Context context) {
         super(context, context.getDatabasePath(DATABASE_NAME).toString(), null, DATABASE_VERSION);
     }
-    
+
     /* (non-Javadoc)
      * @see android.database.sqlite.SQLiteOpenHelper#onCreate(android.database.sqlite.SQLiteDatabase)
      */
@@ -90,13 +90,13 @@ public class CardDatabase extends SQLiteOpenHelper {
         db.execSQL(tags_sql);
         db.execSQL(card_title_index_sql);
     }
-    
+
     /* (non-Javadoc)
      * @see android.database.sqlite.SQLiteOpenHelper#onUpgrade(android.database.sqlite.SQLiteDatabase, int, int)
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        
+
     }
 
     public Cursor getAllCards() {
@@ -111,7 +111,7 @@ public class CardDatabase extends SQLiteOpenHelper {
     	SQLiteDatabase db = getReadableDatabase();
         return db.rawQuery(cardsForQuizQry, null);
     }
-    
+
     public Long getNextCardId() {
     	SQLiteDatabase db = getReadableDatabase();
     	Cursor cur = db.rawQuery(nextIdQry, null);
@@ -121,7 +121,7 @@ public class CardDatabase extends SQLiteOpenHelper {
     	}
     	return 1L;
     }
-    
+
     /**
      * Get a card from the database.
      *
@@ -139,7 +139,7 @@ public class CardDatabase extends SQLiteOpenHelper {
     	}
         return null;
     }
-    
+
     public Card cursorRowToCard(Cursor cur) {
     	Long ident = cur.getLong(0);
 		String title = cur.getString(1);
@@ -159,7 +159,7 @@ public class CardDatabase extends SQLiteOpenHelper {
 		card.setSide2Type(side2Type);
 		return card;
     }
-    
+
     public List<Card> cursorToCards(Cursor cur) {
     	if (cur.getCount() > 0) {
     		List<Card> cards = new ArrayList<Card>();
@@ -195,13 +195,13 @@ public class CardDatabase extends SQLiteOpenHelper {
         	return card.getId();
     	}
     }
-    
-    
+
+
     /** Delete a card in the database. */
     public void deleteCard(Card card) {
         deleteCard(card.getId());
     }
-    
+
     /**
      * Delete a card in the database.
      *

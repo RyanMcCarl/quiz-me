@@ -30,17 +30,17 @@ import android.widget.TextView;
  *
  */
 public class RateCardActivity extends Activity {
-	
+
 	public static final String CARD_RATING_INTENT_RESULT_KEY = "card_rating";
 	public static final String CARD_RATING_INTENT_ID_KEY = "card_id";
-	
+
 	private CardDatabase db;
 	private Card card;
 	private Integer rating;
-	
+
 	private TextView textSideViewer;
     private ImageView imgSideViewer;
-    
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,7 +49,7 @@ public class RateCardActivity extends Activity {
 		Intent intent = getIntent();
 		Long cardId = intent.getExtras().getLong(CARD_RATING_INTENT_ID_KEY);
 		card = db.getCard(cardId);
-		
+
 		FrameLayout cardFrame = (FrameLayout) findViewById(R.id.CardFrame);
 		TextView cardTitle = (TextView) findViewById(R.id.RateCardTitle);
 		RatingBar rateCard = (RatingBar) findViewById(R.id.RateCardRatingBar);
@@ -57,10 +57,10 @@ public class RateCardActivity extends Activity {
 		rating = 1;
 		Button doneBtn = (Button) findViewById(R.id.DoneRatingButton);
 		textSideViewer = new TextView(this);
-        imgSideViewer = new ImageView(this);
-        
+                imgSideViewer = new ImageView(this);
+
 		final RateCardActivity self = this;
-		
+
 		if (card != null) {
 			cardTitle.setText(card.getTitle());
 			if (card.getSide2Type() == Card.TEXT_TYPE) {
@@ -70,7 +70,7 @@ public class RateCardActivity extends Activity {
 				imgSideViewer.setImageURI(card.getSide2URI());
 				cardFrame.addView(imgSideViewer);
 			}
-			
+
 			OnRatingBarChangeListener ratingListener = new OnRatingBarChangeListener() {
 				public void onRatingChanged(RatingBar arg0, float ratingFloat,
 						boolean arg2) {
@@ -78,7 +78,7 @@ public class RateCardActivity extends Activity {
 					L.d("onRatingChanged", "Rating is now %d from float: %f", rating, ratingFloat);
 				}
 			};
-			
+
 			OnClickListener doneListener = new OnClickListener() {
 				public void onClick(View v) {
 					card.incrementCount();
@@ -90,20 +90,20 @@ public class RateCardActivity extends Activity {
 					self.finish();
 				}
 			};
-			
+
 			doneBtn.setOnClickListener(doneListener);
 			rateCard.setOnRatingBarChangeListener(ratingListener);
-			
+
 		} else {
 			// Show an error message
 		}
-		
+
 	}
-	
+
 	@Override
     public void onPause() {
     	super.onPause();
     	db.close();
     }
-    
+
 }

@@ -27,7 +27,7 @@ public class Card {
     public Long id;
     // the cards title
     public String title;
-    
+
     public int side1Type;
     public int side2Type;
     public String side1;
@@ -37,11 +37,11 @@ public class Card {
     public int count = 0;
     public Date lastTime;
     public int interval;
-    
+
     public Card() {
     	lastTime = new Date();
     }
-    
+
     public Card(
         Long id, String title, String side1, String side2, float eFactor) {
       this();
@@ -64,11 +64,11 @@ public class Card {
     public void setTitle(String title) {
     	this.title = title;
     }
-    
+
     public String getTitle() {
     	return this.title;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -76,7 +76,7 @@ public class Card {
     public void setId(Long id) {
     	this.id = id;
     }
-    
+
     public float getEFactor() {
         return eFactor;
     }
@@ -96,7 +96,7 @@ public class Card {
     public void incrementCount() {
     	this.count++;
     }
-    
+
     public int getInterval() {
         return interval;
     }
@@ -104,19 +104,19 @@ public class Card {
     public void setInterval(int interval) {
         this.interval = interval;
     }
-    
+
     public void setLastTime(Long t) {
     	this.lastTime = new Date(t);
     }
-    
+
     public Date getLastTime() {
     	return lastTime;
     }
-    
+
     public Long getLastTimeMillis() {
     	return lastTime.getTime();
     }
-    
+
     public Long getLastTimeSeconds() {
     	return lastTime.getTime() / 1000;
     }
@@ -136,19 +136,19 @@ public class Card {
 	public void setSide2Type(int side2Type) {
 		this.side2Type = side2Type;
 	}
-	
+
 	public Uri getSide1URI() {
 		return Uri.parse(this.side1);
 	}
-	
+
 	public Uri getSide2URI() {
 		return Uri.parse(this.side2);
 	}
-	
+
 	public String getSide1Text() {
 		return this.side1;
 	}
-	
+
 	public String getSide2Text() {
 		return this.side2;
 	}

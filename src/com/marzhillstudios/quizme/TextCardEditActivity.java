@@ -9,9 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class TextCardEditActivity extends Activity {
-	
+
 	public static final String EXTRA_KEY = "CardTextContent";
-	
+
 	@Override
 	public void onCreate(Bundle saveInstanceState) {
 		super.onCreate(saveInstanceState);

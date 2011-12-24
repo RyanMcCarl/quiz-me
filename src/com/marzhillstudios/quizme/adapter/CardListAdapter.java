@@ -53,7 +53,7 @@ public class CardListAdapter extends BaseAdapter {
       private Long id;
       private LinearLayout container;
       private TextView listText;
-      
+
       public CardView(final Context context, final Long id, String title) {
         super(context);
         final CardView self = this;
@@ -64,7 +64,7 @@ public class CardListAdapter extends BaseAdapter {
         container = (LinearLayout) inflater.inflate(R.layout.card_list_item, null);
         listText = (TextView) container.findViewById(R.id.CardListTitleView);
         Button deleteButton = (Button) container.findViewById(R.id.CardListButtonView);
-        
+
         // TextViews need to respond to the onClick event
         OnClickListener updateCardListener = new OnClickListener() {
             public void onClick(View v) {
@@ -76,7 +76,7 @@ public class CardListAdapter extends BaseAdapter {
                     intent);
             }
         };
-        
+
         OnClickListener deleteButtonListener = new OnClickListener() {
         	public void onClick(View v) {
         		L.d("onClick", "Deleting card id: %d spawned by button id: %d",
@@ -87,7 +87,7 @@ public class CardListAdapter extends BaseAdapter {
             	self.invalidate();
         	}
         };
-        
+
         deleteButton.setOnClickListener(deleteButtonListener);
         listText.setOnClickListener(updateCardListener);
         setTitle(title);
@@ -105,7 +105,7 @@ public class CardListAdapter extends BaseAdapter {
           this.id = id;
       }
     }
-    
+
     public int getCount() {
        return cursor.getCount();
     }
@@ -134,7 +134,7 @@ public class CardListAdapter extends BaseAdapter {
        }
        return cv;
     }
-    
+
     public void reset(Cursor cursor) {
     	this.cursor = cursor;
     	this.notifyDataSetInvalidated();

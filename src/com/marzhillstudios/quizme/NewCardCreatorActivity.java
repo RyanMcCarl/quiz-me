@@ -42,7 +42,7 @@ public class NewCardCreatorActivity extends Activity {
     public static final int REQUEST_SIDE2_TEXT_RESULT = 4;
 
     public static final String CARD_INTENT_KEY = "card_for_update";
-    
+
     private Button side1ImageBtn;
     private Button side1TextBtn;
     private Button side2ImageBtn;
@@ -55,7 +55,7 @@ public class NewCardCreatorActivity extends Activity {
     private String side2Text;
 	private Uri imageUriSide2;
 	private Uri imageUriSide1;
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +77,7 @@ public class NewCardCreatorActivity extends Activity {
         Resources res = getResources();
     	side1Text = res.getString(R.string.Side1Text);
         side2Text = res.getString(R.string.Side2Text);
-        
+
         if (intention.hasExtra(CARD_INTENT_KEY)) {
         	// we are editing a card
         	Long id = intention.getExtras().getLong(CARD_INTENT_KEY);
@@ -90,7 +90,7 @@ public class NewCardCreatorActivity extends Activity {
         			res.getString(R.string.NewCardDialogTitleDefault), side1Text, side2Text);
         	fileNamePrefix = String.format("card_%d_", db.getNextCardId());
         }
-        
+
         titleTextBox.setText(card.getTitle());
 
         imageUriSide1 = Uri.fromFile(new File(Environment.getExternalStorageDirectory(),  fileNamePrefix + "side1.png"));
@@ -149,7 +149,7 @@ public class NewCardCreatorActivity extends Activity {
     }
 
     public CardDatabase getDb() { return db; }
-    
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         L.d("NewCardCreatorActivity onActivityResult",
             "Recieved result from an activity resultCode: %d, requestCode %d",
