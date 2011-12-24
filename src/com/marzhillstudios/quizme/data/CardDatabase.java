@@ -49,8 +49,9 @@ public class CardDatabase extends SQLiteOpenHelper {
     private static final String CARDS_TITLE_INDEX_COLUMN =
         CARDS_TABLE_COLUMNS_ARRAY[CARD_TITLE_COLUMN];
 
+    // TODO(jwall): consider days only.
     private static final String cardsForQuizQry = "select * from card_table where " +
-    		"date(last, 'unixepoch', '+' || interval || ' days') >= date('now')" +
+    		"date(last, 'unixepoch', '+' || interval || ' days') <= date('now')" +
     		"order by random()";
     private static final String nextIdQry = "select max(id) + 1 from card_table";
 

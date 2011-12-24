@@ -39,7 +39,9 @@ public class Card {
     public int interval;
 
     public Card() {
-    	lastTime = new Date();
+        lastTime = new Date();
+        this.eFactor = SM2.E_FACTOR_FLOOR;
+        this.interval = SM2.INTERVAL_FLOOR;
     }
 
     public Card(
@@ -50,6 +52,7 @@ public class Card {
       this.side1 = side1;
       this.side2 = side2;
       this.eFactor = eFactor;
+      this.interval = SM2.INTERVAL_FLOOR;
     }
 
     public Card(String title, String side1, String side2) {
