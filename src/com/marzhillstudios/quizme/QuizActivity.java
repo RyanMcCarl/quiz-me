@@ -61,8 +61,7 @@ public class QuizActivity extends Activity {
         cardView = (LinearLayout) getLayoutInflater().inflate(R.layout.card_view, null);
         setContentView(quizView);
         db = new CardDatabase(this);
-        final List<Card> cards = db.cursorToCards(db.getCardsForQuiz());
-        setCards(cards);
+        resetCards();
 
         startBtn = new Button(this);
         startBtn.setText(res.getString(R.string.StartQuizButtonText));
@@ -80,15 +79,15 @@ public class QuizActivity extends Activity {
 
         OnClickListener startClickListener = new OnClickListener() {
         	public void onClick(View v) {
-        		if (cards != null) {
-        			Card currentCard = cards.get(currentIndex);
-    				showStopButton();
-    				quizView.addView(cardView, 1);
-    				showCard(currentCard);
-        		} else {
-        			handleNoCards();
-        		}
-			}
+                    if (self.getCards() != null) {
+                        Card currentCard = self.getCards().get(currentIndex);
+                        showStopButton();
+                        quizView.addView(cardView, 1);
+                        showCard(currentCard);
+                    } else {
+                        handleNoCards();
+                    }
+                }
         };
 
         OnClickListener stopClickListener = new OnClickListener() {
@@ -122,7 +121,7 @@ public class QuizActivity extends Activity {
     		if (currentIndex < cards.size()) {
     			showCurrentCard();
     		} else {
-    			setCards(db.cursorToCards(db.getCardsForQuiz()));
+    			resetCards();
     			if (cards != null) {
     				currentIndex = 0;
     				showCurrentCard();
@@ -155,6 +154,11 @@ public class QuizActivity extends Activity {
     	msg.show();
     }
 
+    public void resetCards() {
+    	L.d(QuizActivity.class.getName(), "Got %d cards for quiz", db.getCardsForQuiz().getCount());
+    	setCards(db.cursorToCards(db.getCardsForQuiz()));
+    }
+    
 	public List<Card> getCards() {
 		return cards;
 	}
